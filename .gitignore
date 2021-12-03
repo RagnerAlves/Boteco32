@@ -75,7 +75,7 @@
 /AcessoBancoDados/AcessoEntity/bin/Debug/net6.0
 /ApiRest/ApiQueExigeAutenticacao/bin/Debug/net6.0
 /ApiRest/ApiQueExigeAutenticacao/obj
-/obj/
+Boteco32/obj
 Boteco32/obj/Boteco32.csproj.nuget.dgspec.json
 Boteco32/obj/Boteco32.csproj.nuget.g.props
 Boteco32/obj/Boteco32.csproj.nuget.g.targets
@@ -87,6 +87,7 @@ Boteco32/obj/Debug/net6.0/Boteco32.csproj.AssemblyReference.cache
 Boteco32/obj/Debug/net6.0/Boteco32.GeneratedMSBuildEditorConfig.editorconfig
 Boteco32/obj/project.assets.json
 Boteco32/obj/project.nuget.cache
+Boteco32/.vs
 Boteco32/.vs/Boteco32/DesignTimeBuild/.dtbcache.v2
 Boteco32/.vs/Boteco32/v17/.futdcache.v1
 Boteco32/.vs/Boteco32/v17/.suo
