@@ -1,11 +1,20 @@
-﻿namespace Boteco32.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace Boteco32.Models
 {
-    public class Cliente
+    public partial class Cliente
     {
-        public long Id { get; set; }
+        public Cliente()
+        {
+            Pedidos = new HashSet<Pedido>();
+        }
+
+        public int Id { get; set; }
         public int Codigo { get; set; }
-        public string Name { get; set; }
+        public string Nome { get; set; }
         public string Endereco { get; set; }
 
+        public virtual ICollection<Pedido> Pedidos { get; set; }
     }
 }

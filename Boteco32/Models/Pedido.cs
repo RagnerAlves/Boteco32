@@ -1,12 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Boteco32.Models
 {
-    public class Pedido
+    public partial class Pedido
     {
-        public long Id { get; set; }
+        public Pedido()
+        {
+            ItemPedidos = new HashSet<ItemPedido>();
+        }
+
+        public int Id { get; set; }
         public int Numero { get; set; }
-        public DateTime Data { get; set; }
-        public decimal ValorToal { get; set; }
+        public string Data { get; set; }
+        public decimal ValorTotal { get; set; }
+        public int IdCliente { get; set; }
+
+        public virtual Cliente IdClienteNavigation { get; set; }
+        public virtual ICollection<ItemPedido> ItemPedidos { get; set; }
     }
 }
