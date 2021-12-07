@@ -1,3 +1,4 @@
+using Boteco32.Models;
 using Boteco32.Repository;
 using Boteco32.Services;
 using Microsoft.AspNetCore.Builder;
@@ -22,16 +23,17 @@ namespace Boteco32
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Boteco32Context>();
             services.AddScoped<IClienteService, ClienteService>();
-            //services.AddScoped<ProdutoService>();
-            //services.AddScoped<PedidoRepository>();
-            //services.AddScoped<ItemPedidoRepository>();
+            services.AddScoped<ProdutoService>();
+            services.AddScoped<PedidoRepository>();
+            services.AddScoped<ItemPedidoRepository>();
 
 
             services.AddScoped<ClienteRepository>();
-            //services.AddScoped<ProdutoRepository>();
-            //services.AddScoped<PedidoRepository>();
-            //services.AddScoped<ItemPedidoRepository>();
+            services.AddScoped<ProdutoRepository>();
+            services.AddScoped<PedidoRepository>();
+            services.AddScoped<ItemPedidoRepository>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
