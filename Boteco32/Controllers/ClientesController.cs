@@ -98,7 +98,7 @@ namespace Boteco32.Controllers
         [HttpPost]
         public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
         {
-            _clienteService.Adicionar(cliente);
+            await _clienteService.Adicionar(cliente);
 
             return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
         }
