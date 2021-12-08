@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Boteco32.Models;
 using Boteco32.Repository;
 
@@ -10,12 +12,12 @@ namespace Boteco32.Services
 
         public ClienteService(ClienteRepository clienteRepository)
         {
-           _clienteRepository = clienteRepository;
+            _clienteRepository = clienteRepository;
         }
 
-        public void Adicionar(Cliente cliente)
+        public async Task Adicionar(Cliente cliente)
         {
-            _clienteRepository.Adicionar(cliente);
+            await _clienteRepository.Adicionar(cliente);
         }
         public void Atualizar(Cliente cliente)
         {
@@ -26,11 +28,11 @@ namespace Boteco32.Services
         {
             _clienteRepository.Delete(cliente);
         }
-        public List<Cliente> BuscarClientes()
+        public  List<Cliente> BuscarClientes()
         {
-            return _clienteRepository.BuscarClientes();
+            return _clienteRepository.BuscarClientes().OrderBy(c => c.Nome).ToList();
         }
 
-       
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Boteco32.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,10 +16,10 @@ namespace Boteco32.Repository
             _boteco32Context = boteco32Context;         
         }
 
-        public void Adicionar(TEntity entity)
+        public async Task Adicionar(TEntity entity)
         {
-            _boteco32Context.Add(entity);
-            _boteco32Context.SaveChanges();
+           await _boteco32Context.AddAsync(entity);
+           _boteco32Context.SaveChanges();
         }
 
         public TEntity Atualizar(TEntity entity)
@@ -36,8 +37,8 @@ namespace Boteco32.Repository
         }
 
         public void Dispose()
-        {
-            throw new NotImplementedException();
+        {         
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Boteco32.Models;
 using Boteco32.Services;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Boteco32.Controllers
 {
@@ -11,18 +12,18 @@ namespace Boteco32.Controllers
     [ApiController]
     public class ClientesController : ControllerBase
     {
-        private readonly ClienteService _clienteService;
+        private readonly IClienteService _clienteService;
 
-        public ClientesController(ClienteService clienteService)
+        public ClientesController(IClienteService clienteService)
         {
             _clienteService = clienteService;
         }
 
         // GET: api/Clientes teste 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
-        {
-            return _clienteService.BuscarClientes();
+        public IEnumerable<Cliente> GetClientes()
+        {       
+            return  _clienteService.BuscarClientes().ToList();
         }
         /*
         // GET: api/Clientes/5

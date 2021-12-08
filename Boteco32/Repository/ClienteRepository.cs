@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Boteco32.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Boteco32.Repository
 {
@@ -16,7 +17,7 @@ namespace Boteco32.Repository
 
         public List<Cliente> BuscarClientes()
         {
-            return _context.Clientes.OrderBy(c => c.Nome).ToList();
+           return  _context.Clientes.ToList();       
         }
     }
 
