@@ -12,11 +12,11 @@ namespace Boteco32.Services
         {
            _clienteRepository = clienteRepository;
         }
+
         public void Adicionar(Cliente cliente)
         {
-           _clienteRepository.Adicionar(cliente);
+            _clienteRepository.Adicionar(cliente);
         }
-
         public void Atualizar(Cliente cliente)
         {
             _clienteRepository.Atualizar(cliente);
@@ -30,5 +30,7 @@ namespace Boteco32.Services
         {
             return _clienteRepository.BuscarClientes();
         }
+
+       
     }
 }
