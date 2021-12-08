@@ -18,7 +18,7 @@ namespace Boteco32.Controllers
             _clienteService = clienteService;
         }
 
-        // GET: api/Clientes
+        // GET: api/Clientes teste 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cliente>>> GetClientes()
         {
