@@ -25,6 +25,7 @@ namespace Boteco32.Controllers
         {       
             return  _clienteService.BuscarClientes().ToList();
         }
+
         /*
         // GET: api/Clientes/5
         [HttpGet("{id}")]
