@@ -1,3 +1,4 @@
+using Boteco32.Interfaces;
 using Boteco32.Models;
 using Boteco32.Repository;
 using Boteco32.Services;
@@ -25,7 +26,7 @@ namespace Boteco32
         {
             services.AddDbContext<Boteco32Context>();
             services.AddScoped<IClienteService, ClienteService>();
-            services.AddScoped<ProdutoService>();
+            services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<PedidoRepository>();
             services.AddScoped<ItemPedidoRepository>();
 
