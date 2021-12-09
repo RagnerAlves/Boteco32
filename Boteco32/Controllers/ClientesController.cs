@@ -5,6 +5,11 @@ using Boteco32.Models;
 using Boteco32.Services;
 using System.Linq;
 using System.Collections.Generic;
+using Boteco32.ViewModels.ClienteViewModel;
+using Boteco32.ViewModels.RetornoViewModel;
+using Boteco32.Extensions;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Boteco32.Controllers
 {
@@ -97,14 +102,40 @@ namespace Boteco32.Controllers
 
         // POST: api/Clientes
         [HttpPost]
-        public async Task<ActionResult<Cliente>> PostCliente(Cliente cliente)
+        public async Task<ActionResult<Cliente>> PostCliente(
+                    [FromBody] CadastrarClienteViewModel clienteViewModel)
         {
-            await _clienteService.Adicionar(cliente);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new RetornoViewModel<Cliente>(ModelState.RecuperarErros()));
+            }
+            try
+            {
+                Cliente cliente = new Cliente()
+                {
+                    Id = 0,
+                    Codigo = clienteViewModel.Codigo,
+                    Nome = clienteViewModel.Nome,
+                    Endereco = clienteViewModel.Endereco,
+                    Pedidos = null
+                };
 
-            return CreatedAtAction("GetCliente", new { id = cliente.Id }, cliente);
+                await _clienteService.Adicionar(cliente);
+            
+                //return Created($"/{aluno.Id}", aluno);
+                return Created($"/{cliente.Id}", new RetornoViewModel<Cliente>(cliente));
+            }
+            catch (DbUpdateException ex)
+            {
+                //return StatusCode(500, "Falha ao atualizar o registro");
+                return StatusCode(500, new RetornoViewModel<List<Cliente>>("Falha ao atualizar o registro"));
+            }
+            catch (Exception ex)
+            {
+                //return StatusCode(500, "Erro interno");
+                return StatusCode(500, new RetornoViewModel<List<Cliente>>("Erro interno"));
+            }
+
         }
-
-        
-       
     }
 }
