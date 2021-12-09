@@ -9,7 +9,7 @@ namespace Boteco32.Repository
     {
 
         private readonly Boteco32Context _boteco32Context;
-        private DbSet<TEntity> dbSet;
+        //private DbSet<TEntity> dbSet;
 
         public BaseRepository(Boteco32Context boteco32Context)
         {
