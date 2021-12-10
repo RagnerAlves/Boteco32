@@ -10,6 +10,6 @@ namespace Boteco32.Services
         void Atualizar(Cliente cliente);
         void Delete(Cliente cliente);
         Task<List<Cliente>> BuscarClientes();
-
+        Task<Cliente> BuscarPorId(int id);
     }
 }

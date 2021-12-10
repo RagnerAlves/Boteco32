@@ -32,6 +32,10 @@ namespace Boteco32.Services
         {
             return await _clienteRepository.BuscarClientes();
         }
+        public async Task<Cliente> BuscarPorId(int id)
+        {
+            return await _clienteRepository.BuscarPorId(id);
+        }
 
 
     }
