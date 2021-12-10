@@ -23,6 +23,40 @@ namespace Boteco32.Controllers
             _produtoService = produtoService;
         }
 
+        // GET: api/Produto
+        [HttpGet]
+        public async Task<IActionResult> GetProdutos()
+        {
+            try
+            {
+                var listaDeProdutos = await _produtoService.BuscarProdutos();
+                if (listaDeProdutos == null)
+                {
+                    return NotFound(new RetornoViewModel<Produto>("Nenhum cliente na base de dados"));
+                }
+                return Ok(new RetornoViewModel<List<Produto>>(listaDeProdutos));
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, new RetornoViewModel<List<Produto>>("Erro interno."));
+            }
+        }
+
+        //GET: api/Produto/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Produto>> GetProduto(int id)
+        {
+            var cliente = await _produtoService.BuscarProdutoPorId(id);
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+
+            return cliente;
+        }
+
+
         // POST: api/Produto
         [HttpPost]
         public async Task<ActionResult<Produto>> PostProduto([FromBody] CadastrarProdutoViewModel produtoViewModel)
@@ -50,6 +84,30 @@ namespace Boteco32.Controllers
                 return StatusCode(500, new RetornoViewModel<List<Produto>>("Erro interno"));
             }
 
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProduto([FromRoute] int id)
+        {
+            try
+            {
+                var produto = await _produtoService.BuscarProdutoPorId(id);
+
+                if (produto == null)
+                    return NotFound(new RetornoViewModel<Produto>("Produto não encontrado."));
+
+                _produtoService.Delete(produto);
+
+                return Ok(new RetornoViewModel<Produto>(produto));
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Produto>("Falha ao remover o produto."));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Produto>("Erro interno."));
+            }
         }
     }
 }

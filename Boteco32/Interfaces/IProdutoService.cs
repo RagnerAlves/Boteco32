@@ -9,6 +9,7 @@ namespace Boteco32.Interfaces
         Task Adicionar(Produto produto);
         void Atualizar(Produto produto);
         void Delete(Produto produto);
-        List<Produto> BuscarProdutos();
+        Task<List<Produto>> BuscarProdutos();
+        Task<Produto> BuscarProdutoPorId(int id);
     }
 }
