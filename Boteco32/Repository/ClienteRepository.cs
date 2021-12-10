@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Boteco32.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +16,9 @@ namespace Boteco32.Repository
             _context = boteco32Context;
         }
 
-        public List<Cliente> BuscarClientes()
+        public async Task<List<Cliente>> BuscarClientes()
         {
-           return  _context.Clientes.ToList();       
+           return  await _context.Clientes.OrderBy(c => c.Nome).ToListAsync();       
         }
     }
 

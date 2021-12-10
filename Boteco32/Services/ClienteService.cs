@@ -28,9 +28,9 @@ namespace Boteco32.Services
         {
             _clienteRepository.Delete(cliente);
         }
-        public  List<Cliente> BuscarClientes()
+        public async Task<List<Cliente>> BuscarClientes()
         {
-            return _clienteRepository.BuscarClientes().OrderBy(c => c.Nome).ToList();
+            return await _clienteRepository.BuscarClientes();
         }
 
 

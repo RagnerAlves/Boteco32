@@ -9,7 +9,7 @@ namespace Boteco32.Services
         Task Adicionar(Cliente cliente);
         void Atualizar(Cliente cliente);
         void Delete(Cliente cliente);
-        List<Cliente> BuscarClientes();
+        Task<List<Cliente>> BuscarClientes();
 
     }
 }

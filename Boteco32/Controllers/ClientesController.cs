@@ -30,7 +30,7 @@ namespace Boteco32.Controllers
         {
             try
             {
-                var listaDeClientes = _clienteService.BuscarClientes().ToList();
+                var listaDeClientes = await _clienteService.BuscarClientes();
                 if (listaDeClientes == null)
                 {
                     return NotFound(new RetornoViewModel<Cliente>("Nenhum cliente na base de dados"));
