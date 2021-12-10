@@ -22,7 +22,7 @@ namespace Boteco32.Repository
            _boteco32Context.SaveChanges();
         }
 
-        public TEntity Atualizar(TEntity entity)
+        public async Task<TEntity> Atualizar(TEntity entity)
         {
             _boteco32Context.Update(entity);
             _boteco32Context.SaveChanges();

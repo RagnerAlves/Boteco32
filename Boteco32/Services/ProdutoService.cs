@@ -20,9 +20,9 @@ namespace Boteco32.Services
            return _produtoRepository.Adicionar(produto);
         }
 
-        public void Atualizar(Produto produto)
+        public Task<Produto> Atualizar(Produto produto)
         {
-         
+            return _produtoRepository.Atualizar(produto);
         }
 
         public async Task<List<Produto>> BuscarProdutos()

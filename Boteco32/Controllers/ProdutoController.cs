@@ -3,7 +3,6 @@ using Boteco32.Interfaces;
 using Boteco32.Models;
 using Boteco32.ViewModels.ProdutoViewModel;
 using Boteco32.ViewModels.RetornoViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -72,7 +71,8 @@ namespace Boteco32.Controllers
                     Id = 0,
                     Codigo = produtoViewModel.Codigo,
                     Nome = produtoViewModel.Nome,
-                    Preco = produtoViewModel.Preco
+                    Preco = produtoViewModel.Preco,
+                    SaldoEstoque = produtoViewModel.SaldoEstoque
                 };
 
                 await _produtoService.Adicionar(produto);
@@ -86,6 +86,41 @@ namespace Boteco32.Controllers
 
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] int id,
+                        [FromBody] CadastrarProdutoViewModel value)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new RetornoViewModel<Produto>(ModelState.RecuperarErros()));
+
+            try
+            {
+                var produto = await _produtoService.BuscarProdutoPorId(id);
+
+                if (produto == null)
+                    return NotFound(new RetornoViewModel<Produto>("Produto não encontrado."));
+
+                produto.Nome = value.Nome;
+                produto.Codigo = value.Codigo;
+                produto.Preco = value.Preco;
+                produto.SaldoEstoque = value.SaldoEstoque;
+
+                await _produtoService.Atualizar(produto);
+
+                return Ok(new RetornoViewModel<Produto>(produto));
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Produto>("Falha ao atualizar o produto."));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Produto>("Erro interno."));
+            }
+
+        }
+
+        // DELETE: api/Produto/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduto([FromRoute] int id)
         {
