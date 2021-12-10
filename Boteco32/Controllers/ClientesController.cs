@@ -24,7 +24,7 @@ namespace Boteco32.Controllers
             _clienteService = clienteService;
         }
 
-        // GET: api/Clientes teste 
+        // GET: api/Clientes
         [HttpGet]
         public async Task<IActionResult> GetClientes()
         {
@@ -92,60 +92,64 @@ namespace Boteco32.Controllers
 
         }
 
-        // PUT: api/Clientes/5
-        //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutCliente()
-        //{
-        //    if (id != cliente.Id)
-        //    {
-        //        return BadRequest();
-        //    }
+        // PUT: api/Clientes
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromRoute] int id,
+                        [FromBody] CadastrarClienteViewModel value)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(new RetornoViewModel<Produto>(ModelState.RecuperarErros()));
 
-        //    _context.Entry(cliente).State = EntityState.Modified;
+            try
+            {
+                var cliente = await _clienteService.BuscarPorId(id);
 
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!ClienteExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+                if (cliente == null)
+                    return NotFound(new RetornoViewModel<Produto>("Cliente não encontrado."));
 
-        //    return NoContent();
-        //}
+                cliente.Nome = value.Nome;
+                cliente.Endereco = value.Endereco;
+                cliente.Codigo = value.Codigo;
 
-        // DELETE: api/Clientes/5
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteCliente(int id)
-        //{
-        //    var cliente = await _context.Clientes.FindAsync(id);
-        //    if (cliente == null)
-        //    {
-        //        return NotFound();
-        //    }
+                await _clienteService.Atualizar(cliente);
 
-        //    _context.Clientes.Remove(cliente);
-        //    await _context.SaveChangesAsync();
+                return Ok(new RetornoViewModel<Cliente>(cliente));
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Cliente>("Falha ao atualizar o cliente."));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Cliente>("Erro interno."));
+            }
 
-        //    return NoContent();
-        //}
+        }
 
-        //private bool ClienteExists(int id)
-        //{
-        //    return _context.Clientes.Any(e => e.Id == id);
-        //}
+        // DELETE: api/Clientes/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCliente([FromRoute] int id)
+        {
+            try
+            {
+                var cliente = await _clienteService.BuscarPorId(id);
 
+                if (cliente == null)
+                    return NotFound(new RetornoViewModel<Produto>("Produto não encontrado."));
 
+                _clienteService.Delete(cliente);
 
+                return Ok(new RetornoViewModel<Cliente>(cliente));
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Cliente>("Falha ao remover o cliente."));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Cliente>("Erro interno."));
+            }
+        }
 
     }
 }

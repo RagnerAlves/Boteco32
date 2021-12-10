@@ -86,6 +86,7 @@ namespace Boteco32.Controllers
 
         }
 
+        // PUT: api/Produto
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromRoute] int id,
                         [FromBody] CadastrarProdutoViewModel value)

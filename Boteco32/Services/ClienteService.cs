@@ -19,9 +19,9 @@ namespace Boteco32.Services
         {
             await _clienteRepository.Adicionar(cliente);
         }
-        public void Atualizar(Cliente cliente)
+        public async Task<Cliente> Atualizar(Cliente cliente)
         {
-            _clienteRepository.Atualizar(cliente);
+            return await _clienteRepository.Atualizar(cliente);
         }
 
         public void Delete(Cliente cliente)
