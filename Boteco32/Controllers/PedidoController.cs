@@ -58,7 +58,7 @@ namespace Boteco32.Controllers
 
         // POST: api/Pedido
         [HttpPost]
-        public async Task<ActionResult<Pedido>> PostPedido([FromBody] CadastrarPedidoViewModel pedidoViewModel)
+        public async Task<ActionResult<Pedido>> PostPedido([FromRoute] int idCliente, [FromBody] CadastrarPedidoViewModel pedidoViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -66,19 +66,10 @@ namespace Boteco32.Controllers
             }
             try
             {
-                Pedido pedido = new Pedido()
-                {
-                    Id = 0,
-                    Numero = pedidoViewModel.Numero,
-                    Data = pedidoViewModel.Data,
-                    ValorTotal = pedidoViewModel.ValorTotal,
-                    IdCliente = pedidoViewModel.IdCliente
-                };
 
+                var pedido = _pedidoService.Adicionar(idCliente, pedidoViewModel);
 
-                await _pedidoService.Adicionar(pedido);
-
-                return Created($"/{pedido.Id}", new RetornoViewModel<Pedido>(pedido));
+                return Created($"/{pedido.Id}", new RetornoViewModel<Task>(pedido));
             }
             catch (Exception ex)
             {
@@ -86,7 +77,7 @@ namespace Boteco32.Controllers
             }
 
         }
-
+/*
         // PUT: api/Pedido
         [HttpPut("{id}")]
         public async Task<IActionResult> Put([FromRoute] int id,
@@ -146,5 +137,6 @@ namespace Boteco32.Controllers
                 return StatusCode(500, new RetornoViewModel<Pedido>("Erro interno."));
             }
         }
+*/
     }
 }

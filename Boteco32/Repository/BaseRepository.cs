@@ -16,10 +16,11 @@ namespace Boteco32.Repository
             _boteco32Context = boteco32Context;         
         }
 
-        public async Task Adicionar(TEntity entity)
+        public async Task<TEntity> Adicionar(TEntity entity)
         {
            await _boteco32Context.AddAsync(entity);
            _boteco32Context.SaveChanges();
+            return entity;
         }
 
         public async Task<TEntity> Atualizar(TEntity entity)

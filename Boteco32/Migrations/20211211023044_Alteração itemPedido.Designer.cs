@@ -3,6 +3,7 @@ using Boteco32.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Boteco32.Migrations
 {
     [DbContext(typeof(Boteco32Context))]
-    partial class Boteco32ContextModelSnapshot : ModelSnapshot
+    [Migration("20211211023044_Alteração itemPedido")]
+    partial class AlteraçãoitemPedido
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
