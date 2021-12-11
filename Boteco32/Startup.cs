@@ -27,9 +27,8 @@ namespace Boteco32
             services.AddDbContext<Boteco32Context>();
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IProdutoService, ProdutoService>();
-            services.AddScoped<PedidoRepository>();
-            services.AddScoped<ItemPedidoRepository>();
-
+            services.AddScoped<IPedidoService, PedidoService>();
+            services.AddScoped<IItemPedidoService, ItemPedidoService>();
 
             services.AddScoped<ClienteRepository>();
             services.AddScoped<ProdutoRepository>();
