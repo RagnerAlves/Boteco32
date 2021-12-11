@@ -43,9 +43,9 @@ namespace Boteco32.Controllers
 
         //GET: api/Produto/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Produto>> GetProduto(int id)
+        public ActionResult<Produto> GetProduto(int id)
         {
-            var cliente = await _produtoService.BuscarProdutoPorId(id);
+            var cliente = _produtoService.BuscarProdutoPorId(id);
 
             if (cliente == null)
             {
@@ -80,7 +80,7 @@ namespace Boteco32.Controllers
                 return Created($"/{produto.Id}", new RetornoViewModel<Produto>(produto));
             }
             catch (Exception ex)
-            { 
+            {
                 return StatusCode(500, new RetornoViewModel<List<Produto>>("Erro interno"));
             }
 
@@ -96,7 +96,7 @@ namespace Boteco32.Controllers
 
             try
             {
-                var produto = await _produtoService.BuscarProdutoPorId(id);
+                var produto = _produtoService.BuscarProdutoPorId(id);
 
                 if (produto == null)
                     return NotFound(new RetornoViewModel<Produto>("Produto não encontrado."));
@@ -127,7 +127,7 @@ namespace Boteco32.Controllers
         {
             try
             {
-                var produto = await _produtoService.BuscarProdutoPorId(id);
+                var produto = _produtoService.BuscarProdutoPorId(id);
 
                 if (produto == null)
                     return NotFound(new RetornoViewModel<Produto>("Produto não encontrado."));

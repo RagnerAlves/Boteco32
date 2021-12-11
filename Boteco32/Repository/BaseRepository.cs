@@ -13,13 +13,13 @@ namespace Boteco32.Repository
 
         public BaseRepository(Boteco32Context boteco32Context)
         {
-            _boteco32Context = boteco32Context;         
+            _boteco32Context = boteco32Context;
         }
 
         public async Task<TEntity> Adicionar(TEntity entity)
         {
-           await _boteco32Context.AddAsync(entity);
-           _boteco32Context.SaveChanges();
+            await _boteco32Context.AddAsync(entity);
+            _boteco32Context.SaveChanges();
             return entity;
         }
 
@@ -38,7 +38,7 @@ namespace Boteco32.Repository
         }
 
         public void Dispose()
-        {         
+        {
             GC.SuppressFinalize(this);
         }
     }

@@ -10,14 +10,14 @@ namespace Boteco32.Services
     {
         private readonly ProdutoRepository _produtoRepository;
 
-        public ProdutoService(ProdutoRepository produto) 
+        public ProdutoService(ProdutoRepository produto)
         {
             _produtoRepository = produto;
         }
 
         public Task Adicionar(Produto produto)
         {
-           return _produtoRepository.Adicionar(produto);
+            return _produtoRepository.Adicionar(produto);
         }
 
         public Task<Produto> Atualizar(Produto produto)
@@ -29,14 +29,14 @@ namespace Boteco32.Services
         {
             return await _produtoRepository.BuscarProdutos();
         }
-        public async Task<Produto> BuscarProdutoPorId(int id)
+        public Produto BuscarProdutoPorId(int id)
         {
-            return await _produtoRepository.BuscarProdutoPorId(id);
+            return _produtoRepository.BuscarProdutoPorId(id);
         }
 
         public void Delete(Produto produto)
         {
-             _produtoRepository.Delete(produto);
+            _produtoRepository.Delete(produto);
         }
     }
 }

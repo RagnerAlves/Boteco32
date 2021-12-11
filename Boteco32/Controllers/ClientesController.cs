@@ -68,25 +68,23 @@ namespace Boteco32.Controllers
             try
             {
                 Cliente cliente = new Cliente()
-                {
-                    Id = 0,
-                    Codigo = clienteViewModel.Codigo,
+                {      
                     Nome = clienteViewModel.Nome,
                     Endereco = clienteViewModel.Endereco,
-                    Pedidos = null
+                    Telefone = clienteViewModel.Telefone        
                 };
 
                 await _clienteService.Adicionar(cliente);
 
-              
+
                 return Created($"/{cliente.Id}", new RetornoViewModel<Cliente>(cliente));
             }
             catch (DbUpdateException)
-            {             
+            {
                 return StatusCode(500, new RetornoViewModel<List<Cliente>>("Falha ao atualizar o registro"));
             }
             catch (Exception)
-            {          
+            {
                 return StatusCode(500, new RetornoViewModel<List<Cliente>>("Erro interno"));
             }
 
@@ -109,7 +107,7 @@ namespace Boteco32.Controllers
 
                 cliente.Nome = value.Nome;
                 cliente.Endereco = value.Endereco;
-                cliente.Codigo = value.Codigo;
+                cliente.Telefone = value.Telefone;
 
                 await _clienteService.Atualizar(cliente);
 

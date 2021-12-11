@@ -18,11 +18,21 @@ namespace Boteco32.Repository
 
         public async Task<List<Cliente>> BuscarClientes()
         {
-           return  await _context.Clientes.OrderBy(c => c.Nome).ToListAsync();       
+            return await _context.Clientes.OrderBy(c => c.Nome).ToListAsync();
         }
         public async Task<Cliente> BuscarPorId(int id)
         {
-            return await _context.Clientes.FirstOrDefaultAsync(c => c.Id == id);
+            try
+            {
+                Cliente resultado = await _context.Clientes.FirstOrDefaultAsync(c => c.Id == id);
+                return resultado;
+            }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
     }
 

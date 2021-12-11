@@ -25,7 +25,7 @@ namespace Boteco32.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=localhost;Database=Boteco32;Trusted_Connection=True;Connection Timeout=60;User ID=sa;Password=1234");
             }
         }
@@ -38,8 +38,6 @@ namespace Boteco32.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Codigo).HasColumnName("codigo");
-
                 entity.Property(e => e.Endereco)
                     .IsRequired()
                     .HasMaxLength(120)
@@ -49,11 +47,20 @@ namespace Boteco32.Models
                     .IsRequired()
                     .HasMaxLength(80)
                     .HasColumnName("nome");
+
+                entity.Property(e => e.Telefone)
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnName("telefone");
             });
 
             modelBuilder.Entity<ItemPedido>(entity =>
             {
                 entity.ToTable("ItemPedido");
+
+                entity.HasIndex(e => e.IdPedido, "IX_ItemPedido_idPedido");
+
+                entity.HasIndex(e => e.IdProduto, "IX_ItemPedido_idProduto");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -62,6 +69,10 @@ namespace Boteco32.Models
                 entity.Property(e => e.IdProduto).HasColumnName("idProduto");
 
                 entity.Property(e => e.Quantidade).HasColumnName("quantidade");
+
+                entity.Property(e => e.Valor)
+                    .HasColumnType("decimal(12, 2)")
+                    .HasColumnName("valor");
 
                 entity.HasOne(d => d.IdPedidoNavigation)
                     .WithMany(p => p.ItemPedidos)
@@ -79,6 +90,8 @@ namespace Boteco32.Models
             modelBuilder.Entity<Pedido>(entity =>
             {
                 entity.ToTable("Pedido");
+
+                entity.HasIndex(e => e.IdCliente, "IX_Pedido_idCliente");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
@@ -116,7 +129,7 @@ namespace Boteco32.Models
                     .HasColumnName("nome");
 
                 entity.Property(e => e.Preco)
-                    .HasColumnType("decimal(10, 2)")
+                    .HasColumnType("decimal(12, 2)")
                     .HasColumnName("preco");
 
                 entity.Property(e => e.SaldoEstoque).HasColumnName("saldoEstoque");

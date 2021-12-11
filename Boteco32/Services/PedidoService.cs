@@ -14,41 +14,46 @@ namespace Boteco32.Services
         private readonly PedidoRepository _pedidoRepository;
         private readonly ItemPedidoRepository _itemPedidoRepository;
         private readonly ProdutoRepository _produtoRepository;
+        private readonly ClienteRepository _clienteRepository;
 
-        public PedidoService(PedidoRepository pedido, ItemPedidoRepository itemPedidoRepository, ProdutoRepository produtoRepository)
+
+        public PedidoService(PedidoRepository pedido,
+            ItemPedidoRepository itemPedidoRepository, ProdutoRepository produtoRepository,
+             ClienteRepository clienteRepository)
         {
             _pedidoRepository = pedido;
             _itemPedidoRepository = itemPedidoRepository;
             _produtoRepository = produtoRepository;
+            _clienteRepository = clienteRepository;
         }
 
         public async Task<Pedido> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
         {
+            Cliente cliente = await _clienteRepository.BuscarPorId(idCliente);
             decimal total = 0;
             foreach (var item in pedido.ItensPedidos)
             {
-                var produto = await _produtoRepository.BuscarProdutoPorId(item.IdProduto);
-                total += (produto.Preco*item.Quantidade);
+                Produto produtoId = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
+                total += (produtoId.Preco * item.Quantidade);
             }
-
-            Pedido p = new Pedido()
+            Pedido novoPedido = new Pedido()
             {
-                Id = 0,
                 Numero = 0,
                 Data = DateTime.Now.ToString(),
-                ValorTotal = (decimal)total,
+                ValorTotal = total,
                 IdCliente = idCliente,
             };
+            Pedido pedidoCadastrado = await _pedidoRepository.Adicionar(novoPedido);
 
-            var pedidoCadastrado = await _pedidoRepository.Adicionar(p);
-            if (pedidoCadastrado != null) { 
+            if (pedidoCadastrado != null)
+            {
                 foreach (var item in pedido.ItensPedidos)
                 {
-                    var produto = await _produtoRepository.BuscarProdutoPorId(item.IdProduto);
+                    var produto = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
+
                     ItemPedido itemP = new ItemPedido()
                     {
-                        Id = 0,
-                        ValorUnitario = (float)produto.Preco,
+                        Valor = produto.Preco,
                         IdProduto = produto.Id,
                         IdPedido = pedidoCadastrado.Id
                     };

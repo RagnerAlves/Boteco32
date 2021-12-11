@@ -18,9 +18,10 @@ namespace Boteco32.Repository
         {
             return await _context.Produtos.OrderBy(p => p.Nome).ToListAsync();
         }
-        public async Task<Produto> BuscarProdutoPorId(int id)
+        public Produto BuscarProdutoPorId(int id)
         {
-            return await _context.Produtos.FirstOrDefaultAsync(p => p.Id == id);
+            var resultado = _context.Produtos.FirstOrDefault(p => p.Id == id);
+            return resultado;
         }
     }
 }

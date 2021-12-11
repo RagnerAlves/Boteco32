@@ -7,9 +7,9 @@ namespace Boteco32.Models
     {
         public int Id { get; set; }
         public int Quantidade { get; set; }
-        public float ValorUnitario { get; set; }
         public int IdPedido { get; set; }
         public int IdProduto { get; set; }
+        public decimal Valor { get; set; }
 
         public virtual Pedido IdPedidoNavigation { get; set; }
         public virtual Produto IdProdutoNavigation { get; set; }
