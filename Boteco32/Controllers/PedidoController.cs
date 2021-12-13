@@ -58,7 +58,7 @@ namespace Boteco32.Controllers
 
         // POST: api/Pedido
         [HttpPost]
-        public async Task<ActionResult<Pedido>> PostPedido(int idCliente, [FromBody] CadastrarPedidoViewModel pedidoViewModel)
+        public async Task<IActionResult> PostPedido(int idCliente, [FromBody] CadastrarPedidoViewModel pedidoViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -67,9 +67,9 @@ namespace Boteco32.Controllers
             try
             {
 
-                var pedido = _pedidoService.Adicionar(idCliente, pedidoViewModel);
+                var pedido = await _pedidoService.Adicionar(idCliente, pedidoViewModel);
 
-                return Created($"/{pedido.Id}", new RetornoViewModel<Task>(pedido));
+                return Created($"/{pedido.Id}", new RetornoViewModel<Pedido>(pedido));
             }
             catch (Exception ex)
             {

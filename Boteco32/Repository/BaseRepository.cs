@@ -30,10 +30,10 @@ namespace Boteco32.Repository
             return entity;
         }
 
-        public TEntity Delete(TEntity entity)
+        public async Task<TEntity> Delete(TEntity entity)
         {
             _boteco32Context.Remove(entity);
-            _boteco32Context.SaveChanges();
+           await _boteco32Context.SaveChangesAsync();
             return entity;
         }
 
