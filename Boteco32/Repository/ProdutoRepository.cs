@@ -23,5 +23,20 @@ namespace Boteco32.Repository
             var resultado = _context.Produtos.FirstOrDefault(p => p.Id == id);
             return resultado;
         }
+
+        public bool AtualizaEstoque(int id, int quantidade)
+        {
+            Produto produto = BuscarProdutoPorId(id);
+            if(produto.SaldoEstoque >= quantidade)
+            {
+                produto.SaldoEstoque -= quantidade;
+                Atualizar(produto);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
