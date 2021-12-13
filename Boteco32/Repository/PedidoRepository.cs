@@ -22,5 +22,12 @@ namespace Boteco32.Repository
         {
             return await _context.Pedidos.FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public int GerarNumeroPedido()
+        {
+            int quant =  _context.Pedidos.Count();
+            return quant;
+        }
+
     }
 }

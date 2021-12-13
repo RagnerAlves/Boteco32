@@ -71,6 +71,10 @@ namespace Boteco32.Controllers
 
                 return Created($"/{pedido.Id}", new RetornoViewModel<Pedido>(pedido));
             }
+            catch (DbUpdateException)
+            {
+                return StatusCode(500, new RetornoViewModel<List<Pedido>>("Falha ao salvar o registro"));
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new RetornoViewModel<List<Pedido>>("Erro interno"));
