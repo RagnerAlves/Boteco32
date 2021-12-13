@@ -15,25 +15,28 @@ namespace Boteco32.Services
         private readonly ItemPedidoRepository _itemPedidoRepository;
         private readonly ProdutoRepository _produtoRepository;
         private readonly ClienteRepository _clienteRepository;
+        private readonly IClienteService _clienteService;
+
+
 
 
         public PedidoService(PedidoRepository pedido,
             ItemPedidoRepository itemPedidoRepository, ProdutoRepository produtoRepository,
-             ClienteRepository clienteRepository)
+             IClienteService clienteService)
         {
             _pedidoRepository = pedido;
             _itemPedidoRepository = itemPedidoRepository;
             _produtoRepository = produtoRepository;
-            _clienteRepository = clienteRepository;
+            _clienteService = clienteService;
         }
 
         public async Task<Pedido> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
         {
-            Cliente cliente = await _clienteRepository.BuscarPorId(idCliente);
+            var cliente = await _clienteService.BuscarPorId(idCliente);
             decimal total = 0;
             foreach (var item in pedido.ItensPedidos)
             {
-                Produto produtoId = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
+                var produtoId = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
                 total += (produtoId.Preco * item.Quantidade);
             }
             Pedido novoPedido = new Pedido()
@@ -43,24 +46,18 @@ namespace Boteco32.Services
                 ValorTotal = total,
                 IdCliente = idCliente,
             };
-            Pedido pedidoCadastrado = await _pedidoRepository.Adicionar(novoPedido);
 
-            if (pedidoCadastrado != null)
+            if (novoPedido != null)
             {
+                 novoPedido.ItemPedidos = new List<ItemPedido>();
+
                 foreach (var item in pedido.ItensPedidos)
                 {
                     var produto = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
-
-                    ItemPedido itemP = new ItemPedido()
-                    {
-                        Valor = produto.Preco,
-                        IdProduto = produto.Id,
-                        IdPedido = pedidoCadastrado.Id
-                    };
-                    await _itemPedidoRepository.Adicionar(itemP);
+                    novoPedido.ItemPedidos.Add(new ItemPedido() {Quantidade = item.Quantidade, IdProduto = produto.Id, Valor = produto.Preco});                  
                 }
             }
-            return pedidoCadastrado;
+            return await _pedidoRepository.Adicionar(novoPedido);
         }
 
         public Task<Pedido> Atualizar(Pedido pedido)
