@@ -10,7 +10,7 @@ namespace Boteco32.Repository
     {
         private readonly Boteco32Context _context;
 
-        public ProdutoRepository(Boteco32Context boteco32Context) : base(boteco32Context)
+        public ProdutoRepository(Boteco32Context boteco32Context)
         {
             _context = boteco32Context;
         }
@@ -24,13 +24,13 @@ namespace Boteco32.Repository
             return resultado;
         }
 
-        public bool AtualizaEstoque(int id, int quantidade)
+        public async Task<bool> AtualizaEstoque(int id, int quantidade)
         {
             Produto produto = BuscarProdutoPorId(id);
             if(produto.SaldoEstoque >= quantidade)
             {
                 produto.SaldoEstoque -= quantidade;
-                Atualizar(produto);
+                await Atualizar(produto);
                 return true;
             }
             else

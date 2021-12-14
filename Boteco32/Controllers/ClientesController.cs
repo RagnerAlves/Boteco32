@@ -10,6 +10,7 @@ using Boteco32.ViewModels.RetornoViewModel;
 using Boteco32.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq.Expressions;
 
 namespace Boteco32.Controllers
 {
@@ -30,7 +31,7 @@ namespace Boteco32.Controllers
         {
             try
             {
-                var listaDeClientes = await _clienteService.BuscarClientes();
+                var listaDeClientes = await _clienteService.BuscarTodos();
                 if (listaDeClientes == null)
                 {
                     return NotFound(new RetornoViewModel<Cliente>("Nenhum cliente na base de dados"));
@@ -135,7 +136,7 @@ namespace Boteco32.Controllers
                 if (cliente == null)
                     return NotFound(new RetornoViewModel<Produto>("Produto não encontrado."));
 
-                _clienteService.Delete(cliente);
+                await _clienteService.Excluir(cliente);
 
                 return Ok(new RetornoViewModel<Cliente>(cliente));
             }

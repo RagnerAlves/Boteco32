@@ -20,9 +20,9 @@ namespace Boteco32.Services
             return _produtoRepository.Adicionar(produto);
         }
 
-        public Task<Produto> Atualizar(Produto produto)
+        public async Task Atualizar(Produto produto)
         {
-            return _produtoRepository.Atualizar(produto);
+            await _produtoRepository.Atualizar(produto);
         }
 
         public async Task<List<Produto>> BuscarProdutos()
@@ -33,10 +33,9 @@ namespace Boteco32.Services
         {
             return _produtoRepository.BuscarProdutoPorId(id);
         }
-
-        public void Delete(Produto produto)
+        public async Task Delete(Produto produto)
         {
-            _produtoRepository.Delete(produto);
+           await _produtoRepository.Delete(produto);
         }
     }
 }
