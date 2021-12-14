@@ -28,10 +28,10 @@ namespace GeradorToken.Servicos
                     algorithm:SecurityAlgorithms.HmacSha256Signature)
             };
 
-            foreach(var role in user.ListaRoles)
-            {
-                tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role.Descricao));
-            }
+            //foreach(var role in user.ListaRoles)
+            //{
+            //    tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role.Descricao));
+            //}
 
 
             //Criando efetivamente o TOKEN
