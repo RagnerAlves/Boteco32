@@ -58,7 +58,7 @@ namespace Boteco32.Controllers
 
         // POST: api/Pedido
         [HttpPost]
-        public async Task<ActionResult<Pedido>> PostPedido(int idCliente, [FromBody] CadastrarPedidoViewModel pedidoViewModel)
+        public async Task<IActionResult> PostPedido(int idCliente, [FromBody] CadastrarPedidoViewModel pedidoViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -66,10 +66,13 @@ namespace Boteco32.Controllers
             }
             try
             {
+                var retornoViewModel = await _pedidoService.Adicionar(idCliente, pedidoViewModel);
 
-                var pedido = _pedidoService.Adicionar(idCliente, pedidoViewModel);
-
-                return Created($"/{pedido.Id}", new RetornoViewModel<Task>(pedido));
+                return Created($"/{retornoViewModel.Data.Id}", retornoViewModel);
+            }
+            catch (DbUpdateException)
+            {
+                return StatusCode(500, new RetornoViewModel<List<Pedido>>("Falha ao salvar o registro"));
             }
             catch (Exception ex)
             {

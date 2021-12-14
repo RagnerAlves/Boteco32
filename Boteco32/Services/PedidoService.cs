@@ -3,6 +3,7 @@ using Boteco32.Models;
 using Boteco32.Repository;
 using Boteco32.ViewModels;
 using Boteco32.ViewModels.ProdutoViewModel;
+using Boteco32.ViewModels.RetornoViewModel;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,52 +16,59 @@ namespace Boteco32.Services
         private readonly ItemPedidoRepository _itemPedidoRepository;
         private readonly ProdutoRepository _produtoRepository;
         private readonly ClienteRepository _clienteRepository;
-
+        private readonly IClienteService _clienteService;
 
         public PedidoService(PedidoRepository pedido,
             ItemPedidoRepository itemPedidoRepository, ProdutoRepository produtoRepository,
-             ClienteRepository clienteRepository)
+             IClienteService clienteService)
         {
             _pedidoRepository = pedido;
             _itemPedidoRepository = itemPedidoRepository;
             _produtoRepository = produtoRepository;
-            _clienteRepository = clienteRepository;
+            _clienteService = clienteService;
         }
 
-        public async Task<Pedido> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
+        public async Task<RetornoViewModel<Pedido>> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
         {
-            Cliente cliente = await _clienteRepository.BuscarPorId(idCliente);
+
+            var cliente = await _clienteService.BuscarPorId(idCliente);
             decimal total = 0;
+            Pedido novoPedido = new Pedido();
+
             foreach (var item in pedido.ItensPedidos)
             {
-                Produto produtoId = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
-                total += (produtoId.Preco * item.Quantidade);
-            }
-            Pedido novoPedido = new Pedido()
-            {
-                Numero = 0,
-                Data = DateTime.Now.ToString(),
-                ValorTotal = total,
-                IdCliente = idCliente,
-            };
-            Pedido pedidoCadastrado = await _pedidoRepository.Adicionar(novoPedido);
+                var produto = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
 
-            if (pedidoCadastrado != null)
-            {
-                foreach (var item in pedido.ItensPedidos)
+                if (produto == null)
                 {
-                    var produto = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
-
-                    ItemPedido itemP = new ItemPedido()
+                    //throw new Exception("Produto invalido");
+                    return new RetornoViewModel<Pedido>($"Produto não encontrado a partir do{item.IdProduto}");
+                }
+                else
+                {
+                    if (_produtoRepository.AtualizaEstoque(produto.Id, item.Quantidade))
                     {
-                        Valor = produto.Preco,
-                        IdProduto = produto.Id,
-                        IdPedido = pedidoCadastrado.Id
-                    };
-                    await _itemPedidoRepository.Adicionar(itemP);
+                        novoPedido.ItemPedidos.Add(new ItemPedido() { Quantidade = item.Quantidade, IdProduto = produto.Id, Valor = produto.Preco * item.Quantidade });
+                        total += produto.Preco * item.Quantidade;
+                    }
+                    else
+                    {
+                        //throw new Exception($"Saldo insuficiente - {produto.SaldoEstoque}");
+                        return new RetornoViewModel<Pedido>($"Estoque insuficiente{produto.SaldoEstoque}");
+
+                    }
+
                 }
             }
-            return pedidoCadastrado;
+
+            novoPedido.Data = DateTime.Now.ToString();
+            novoPedido.ValorTotal = total;
+            novoPedido.Numero = _pedidoRepository.GerarNumeroPedido() + 1;
+            novoPedido.IdCliente = idCliente;
+
+            var retorno = await _pedidoRepository.Adicionar(novoPedido);
+            return new RetornoViewModel<Pedido>(retorno);
+
         }
 
         public Task<Pedido> Atualizar(Pedido pedido)

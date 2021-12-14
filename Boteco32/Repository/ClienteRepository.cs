@@ -32,7 +32,7 @@ namespace Boteco32.Repository
 
                 throw ex;
             }
-
+           
         }
     }
 

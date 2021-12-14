@@ -6,7 +6,7 @@ namespace Boteco32.ViewModels.RetornoViewModel
     {
         public T Data { get; private set; }
 
-        public List<string> Erros { get; private set; } = new();
+        public List<string> Erros { get; private set; } = new(); 
         public RetornoViewModel(T data, List<string> erros)
         {
             Data = data;
