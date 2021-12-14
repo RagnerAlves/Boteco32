@@ -3,6 +3,7 @@ using Boteco32.Interfaces;
 using Boteco32.Models;
 using Boteco32.ViewModels.ProdutoViewModel;
 using Boteco32.ViewModels.RetornoViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Boteco32.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PedidoController : ControllerBase
