@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Boteco32.Migrations
 {
     [DbContext(typeof(Boteco32Context))]
-    [Migration("20211214003750_InitialMig")]
-    partial class InitialMig
+    [Migration("20211211165553_MigrationInitial")]
+    partial class MigrationInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,12 +32,6 @@ namespace Boteco32.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
-                        .HasColumnName("email");
-
                     b.Property<string>("Endereco")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -49,12 +43,6 @@ namespace Boteco32.Migrations
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)")
                         .HasColumnName("nome");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("senha");
 
                     b.Property<string>("Telefone")
                         .IsRequired()

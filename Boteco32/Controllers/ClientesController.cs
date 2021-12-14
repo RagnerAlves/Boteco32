@@ -10,11 +10,9 @@ using Boteco32.ViewModels.RetornoViewModel;
 using Boteco32.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Boteco32.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientesController : ControllerBase
