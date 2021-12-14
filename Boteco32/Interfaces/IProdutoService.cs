@@ -7,8 +7,8 @@ namespace Boteco32.Interfaces
     public interface IProdutoService
     {
         Task Adicionar(Produto produto);
-        Task<Produto> Atualizar(Produto produto);
-        void Delete(Produto produto);
+        Task Atualizar(Produto produto);
+        Task Delete(Produto produto);
         Task<List<Produto>> BuscarProdutos();
         Produto BuscarProdutoPorId(int id);
     }

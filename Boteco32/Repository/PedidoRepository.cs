@@ -1,33 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Boteco32.Interfaces;
 using Boteco32.Models;
+using Boteco32.ViewModels.ProdutoViewModel;
+using Boteco32.ViewModels.RetornoViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Boteco32.Repository
 {
-    public class PedidoRepository : BaseRepository<Pedido>
+    public class PedidoRepository : BaseRepository<Pedido>, IDisposable
     {
-        private readonly Boteco32Context _context;
+        private readonly DbContextOptions<Boteco32Context> _context;
 
-        public PedidoRepository(Boteco32Context boteco32Context) : base(boteco32Context)
+        public PedidoRepository()
         {
-            _context = boteco32Context;
+            _context = new DbContextOptions<Boteco32Context>();
+        }
+        public async Task<Pedido> AdicionarPedido(Pedido pedido)
+        {
+            using (var data = new Boteco32Context(_context))
+            {
+               await data.Set<Pedido>().AddAsync(pedido);
+               await data.SaveChangesAsync();
+                return pedido;
+            }
         }
         public async Task<List<Pedido>> BuscarPedidos()
         {
-            return await _context.Pedidos.OrderBy(p => p.Data).ToListAsync();
+            using (var data = new Boteco32Context(_context))
+            {
+                return await data.Set<Pedido>().AsNoTracking().ToListAsync();
+            }
+
         }
         public async Task<Pedido> BuscarPedidoPorId(int id)
         {
-            return await _context.Pedidos.FirstOrDefaultAsync(p => p.Id == id);
+            using (var data = new Boteco32Context(_context))
+            {
+                return await data.Set<Pedido>().FindAsync(id);
+            }       
         }
-
         public int GerarNumeroPedido()
         {
-            int quant =  _context.Pedidos.Count();
-            return quant;
+            using (var data = new Boteco32Context(_context))
+            {
+              int quant =  data.Set<Pedido>().Count();
+              return quant;
+            }                   
         }
-
     }
 }

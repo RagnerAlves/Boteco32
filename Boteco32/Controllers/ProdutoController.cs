@@ -132,7 +132,7 @@ namespace Boteco32.Controllers
                 if (produto == null)
                     return NotFound(new RetornoViewModel<Produto>("Produto não encontrado."));
 
-                _produtoService.Delete(produto);
+                await _produtoService.Delete(produto);
 
                 return Ok(new RetornoViewModel<Produto>(produto));
             }

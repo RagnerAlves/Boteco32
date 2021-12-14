@@ -13,9 +13,7 @@ namespace Boteco32.Services
     public class PedidoService : IPedidoService
     {
         private readonly PedidoRepository _pedidoRepository;
-        private readonly ItemPedidoRepository _itemPedidoRepository;
         private readonly ProdutoRepository _produtoRepository;
-        private readonly ClienteRepository _clienteRepository;
         private readonly IClienteService _clienteService;
 
         public PedidoService(PedidoRepository pedido,
@@ -23,52 +21,52 @@ namespace Boteco32.Services
              IClienteService clienteService)
         {
             _pedidoRepository = pedido;
-            _itemPedidoRepository = itemPedidoRepository;
             _produtoRepository = produtoRepository;
             _clienteService = clienteService;
         }
 
         public async Task<RetornoViewModel<Pedido>> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
         {
-
-            var cliente = await _clienteService.BuscarPorId(idCliente);
             decimal total = 0;
-            Pedido novoPedido = new Pedido();
 
+            Cliente cliente = await _clienteService.BuscarPorId(idCliente);
+     
+
+            Pedido novoPedido = new Pedido();
             foreach (var item in pedido.ItensPedidos)
             {
                 var produto = _produtoRepository.BuscarProdutoPorId(item.IdProduto);
 
                 if (produto == null)
                 {
-                    //throw new Exception("Produto invalido");
-                    return new RetornoViewModel<Pedido>($"Produto não encontrado a partir do{item.IdProduto}");
+                    return new RetornoViewModel<Pedido>($"Produto não encontrado a partir do {item.IdProduto}");
                 }
                 else
                 {
-                    if (_produtoRepository.AtualizaEstoque(produto.Id, item.Quantidade))
+                    if (await _produtoRepository.AtualizaEstoque(produto.Id, item.Quantidade))
                     {
                         novoPedido.ItemPedidos.Add(new ItemPedido() { Quantidade = item.Quantidade, IdProduto = produto.Id, Valor = produto.Preco * item.Quantidade });
                         total += produto.Preco * item.Quantidade;
                     }
                     else
                     {
-                        //throw new Exception($"Saldo insuficiente - {produto.SaldoEstoque}");
-                        return new RetornoViewModel<Pedido>($"Estoque insuficiente{produto.SaldoEstoque}");
-
+                        return new RetornoViewModel<Pedido>($"Quantidade em estoque insuficiente! Quantidade disponível : {produto.SaldoEstoque}");
                     }
-
                 }
-            }
+            }         
 
             novoPedido.Data = DateTime.Now.ToString();
             novoPedido.ValorTotal = total;
             novoPedido.Numero = _pedidoRepository.GerarNumeroPedido() + 1;
             novoPedido.IdCliente = idCliente;
 
-            var retorno = await _pedidoRepository.Adicionar(novoPedido);
-            return new RetornoViewModel<Pedido>(retorno);
+            Pedido resultado = await _pedidoRepository.AdicionarPedido(novoPedido);
+            return new RetornoViewModel<Pedido>(resultado);
+        }
 
+        public Task Adicionar(Pedido obj)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<Pedido> Atualizar(Pedido pedido)
@@ -76,19 +74,38 @@ namespace Boteco32.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<Pedido> BuscarPedidoPorId(int id)
+        public async Task<Pedido> BuscarPedidoPorId(int id)
         {
-            throw new System.NotImplementedException();
+            return await _pedidoRepository.BuscarPorId(id);
+        }
+        public async Task<List<Pedido>> BuscarPedidos()
+        {
+            return await _pedidoRepository.BuscarPedidos();
         }
 
-        public Task<List<Pedido>> BuscarPedidos()
+        public Task<Pedido> BuscarPorId(int id)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public Task<List<Pedido>> BuscarTodos()
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(Pedido pedido)
         {
             throw new System.NotImplementedException();
+        }
+
+        public Task Excluir(Pedido obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IGenerics<Pedido>.Atualizar(Pedido obj)
+        {
+            throw new NotImplementedException();
         }
     }
 }

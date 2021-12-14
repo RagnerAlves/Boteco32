@@ -25,6 +25,11 @@ namespace Boteco32.Services
             throw new System.NotImplementedException();
         }
 
+        public Task<ItemPedido> AtualizarItemPedido(ItemPedido itempedido)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Task<ItemPedido> BuscarItemPedidoPorId(int id)
         {
             throw new System.NotImplementedException();
@@ -35,7 +40,27 @@ namespace Boteco32.Services
             throw new System.NotImplementedException();
         }
 
+        public Task<ItemPedido> BuscarPorId(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<List<ItemPedido>> BuscarTodos()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Delete(ItemPedido itempedido)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task Excluir(ItemPedido obj)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        Task IGenerics<ItemPedido>.Atualizar(ItemPedido obj)
         {
             throw new System.NotImplementedException();
         }

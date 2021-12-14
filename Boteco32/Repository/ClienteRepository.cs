@@ -1,39 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Boteco32.Models;
+using Boteco32.Services;
+using Boteco32.ViewModels.RetornoViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace Boteco32.Repository
 {
-    public class ClienteRepository : BaseRepository<Cliente>
+    public class ClienteRepository : BaseRepository<Cliente>, IClienteService
     {
-
-        private readonly Boteco32Context _context;
-
-        public ClienteRepository(Boteco32Context boteco32Context) : base(boteco32Context)
+        private readonly DbContextOptions<Boteco32Context> _context;
+        public ClienteRepository(Boteco32Context boteco32Context) 
         {
-            _context = boteco32Context;
+            _context = new DbContextOptions<Boteco32Context>();
         }
-
-        public async Task<List<Cliente>> BuscarClientes()
+       
+        public async Task<List<Cliente>> ListarTodos(Expression<Func<Cliente, bool>> expression)
         {
-            return await _context.Clientes.OrderBy(c => c.Nome).ToListAsync();
-        }
-        public async Task<Cliente> BuscarPorId(int id)
-        {
-            try
+            using (var banco = new Boteco32Context(_context))
             {
-                Cliente resultado = await _context.Clientes.FirstOrDefaultAsync(c => c.Id == id);
-                return resultado;
+                return await banco.Clientes.Where(expression).AsNoTracking().ToListAsync();
             }
-            catch (System.Exception ex)
-            {
-
-                throw ex;
-            }
-           
         }
+        public Task Excluir(Cliente obj)
+        {
+            throw new NotImplementedException();
+        }
+
+      
     }
 
 
