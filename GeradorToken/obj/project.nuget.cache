@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6fCla75hJluO3JySsER1ykmeOcjn5u1XBhe9G2/N96SyTnTOacZaxGgz7925J95BQQWHdP5WI28mbt5rfp93gA==",
+  "dgSpecHash": "9qnFbiTswYs+PcM2frLSj00++C3ipwq6/cTjrLSbz0wBpxSy29geYNxuGuDC49h57QOOeBIZSMMU4+i88JlCUw==",
   "success": true,
-  "projectFilePath": "E:\\Dev\\CSharp\\AcelaraAtos-Roberto\\ApiRest\\GeradorToken\\GeradorToken.csproj",
+  "projectFilePath": "E:\\Dev\\CSharp\\Boteco32\\GeradorToken\\GeradorToken.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\allan\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\allan\\.nuget\\packages\\microsoft.aspnetcore.authentication\\2.2.0\\microsoft.aspnetcore.authentication.2.2.0.nupkg.sha512",
