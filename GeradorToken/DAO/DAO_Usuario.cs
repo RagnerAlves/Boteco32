@@ -12,9 +12,12 @@ namespace GeradorToken.DAO
             usu.Id = 0;
             try
             {
-                string sqlUsuario = $@"INSERT INTO Usuario (nome,email,senhacriptografada) OUTPUT INSERTED.id VALUES (@nome, @email, @senhacriptografada)"; //NUCA CONCATENAR STRING AQUI, PELA MOR DE DEUS ....
+                string sqlUsuario = $@"INSERT INTO Usuario (nome,email,senhacriptografada)
+                                                OUTPUT INSERTED.id 
+                                                VALUES (@nome, @email, @senhacriptografada)"; //NUCA CONCATENAR STRING AQUI, PELA MOR DE DEUS ....
 
-                string sqlRoles = $@"INSERT INTO Role(descricao,idUsuario) VALUES(@descricao, @idUsuario)";
+                string sqlRoles = $@"INSERT INTO Role(descricao,idUsuario)
+                                     VALUES(@descricao, @idUsuario)";
 
 
                 using (SqlConnection conexao = new SqlConnection(Configuracao.CONNECTION_STRING))
@@ -63,7 +66,9 @@ namespace GeradorToken.DAO
         {
             //O parametro usuário deve vir com o usuário preenchido
 
-            string sql = @"SELECT Usuario.id,nome,email,senhacriptografada, Role.id, descricao, idUsuario from Usuario INNER JOIN Role ON Role.idUsuario = Usuario.id WHERE Usuario.nome = @nome";
+            string sql = @"SELECT Usuario.id,nome,email,senhacriptografada, Role.id, descricao, idUsuario from Usuario
+                            INNER JOIN Role ON Role.idUsuario = Usuario.id                            
+                            WHERE Usuario.nome = @nome";
             Usuario usuTemp = null;
 
             try

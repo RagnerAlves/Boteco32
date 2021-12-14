@@ -1811,11 +1811,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Dev\\CSharp\\Boteco32\\GeradorToken\\GeradorToken.csproj",
+      "projectUniqueName": "E:\\Dev\\CSharp\\AcelaraAtos-Roberto\\ApiRest\\GeradorToken\\GeradorToken.csproj",
       "projectName": "GeradorToken",
-      "projectPath": "E:\\Dev\\CSharp\\Boteco32\\GeradorToken\\GeradorToken.csproj",
+      "projectPath": "E:\\Dev\\CSharp\\AcelaraAtos-Roberto\\ApiRest\\GeradorToken\\GeradorToken.csproj",
       "packagesPath": "C:\\Users\\allan\\.nuget\\packages\\",
-      "outputPath": "E:\\Dev\\CSharp\\Boteco32\\GeradorToken\\obj\\",
+      "outputPath": "E:\\Dev\\CSharp\\AcelaraAtos-Roberto\\ApiRest\\GeradorToken\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\allan\\AppData\\Roaming\\NuGet\\NuGet.Config",
