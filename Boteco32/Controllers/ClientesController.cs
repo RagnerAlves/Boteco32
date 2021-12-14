@@ -69,7 +69,7 @@ namespace Boteco32.Controllers
             try
             {
                 Cliente cliente = new Cliente()
-                {                     
+                {   //                   
                     Email = clienteViewModel.Email,
                     Senha = clienteViewModel.Senha,
                     Endereco = clienteViewModel.Endereco,
