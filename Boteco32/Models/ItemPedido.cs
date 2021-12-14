@@ -5,11 +5,6 @@ namespace Boteco32.Models
 {
     public partial class ItemPedido
     {
-        public ItemPedido()
-        {         
-           
-        }
-
         public int Id { get; set; }
         public int Quantidade { get; set; }
         public int IdPedido { get; set; }
