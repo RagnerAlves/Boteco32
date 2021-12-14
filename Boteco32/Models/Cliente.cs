@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 namespace Boteco32.Models
 {
-    public partial class Cliente
+    public partial class Cliente : Usuario
     {
         public Cliente()
         {
             Pedidos = new HashSet<Pedido>();
+            Usuarios = new HashSet<Usuario>();
         }
 
         public int Id { get; set; }
@@ -16,5 +17,6 @@ namespace Boteco32.Models
         public string Telefone { get; set; }
 
         public virtual ICollection<Pedido> Pedidos { get; set; }
+        public virtual ICollection<Usuario> Usuarios { get; set; }
     }
 }

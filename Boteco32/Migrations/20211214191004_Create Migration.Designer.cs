@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Boteco32.Migrations
 {
     [DbContext(typeof(Boteco32Context))]
-    [Migration("20211211165553_MigrationInitial")]
-    partial class MigrationInitial
+    [Migration("20211214191004_Create Migration")]
+    partial class CreateMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -155,6 +155,47 @@ namespace Boteco32.Migrations
                     b.ToTable("Produto", (string)null);
                 });
 
+            modelBuilder.Entity("Boteco32.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nchar(80)")
+                        .HasColumnName("email")
+                        .IsFixedLength();
+
+                    b.Property<int>("IdCliente")
+                        .HasColumnType("int")
+                        .HasColumnName("idCliente");
+
+                    b.Property<string>("NomeUsuario")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nchar(80)")
+                        .HasColumnName("nomeUsuario")
+                        .IsFixedLength();
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nchar(80)")
+                        .HasColumnName("senha")
+                        .IsFixedLength();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCliente");
+
+                    b.ToTable("Usuario", (string)null);
+                });
+
             modelBuilder.Entity("Boteco32.Models.ItemPedido", b =>
                 {
                     b.HasOne("Boteco32.Models.Pedido", "IdPedidoNavigation")
@@ -185,9 +226,22 @@ namespace Boteco32.Migrations
                     b.Navigation("IdClienteNavigation");
                 });
 
+            modelBuilder.Entity("Boteco32.Models.Usuario", b =>
+                {
+                    b.HasOne("Boteco32.Models.Cliente", "IdClienteNavigation")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("IdCliente")
+                        .IsRequired()
+                        .HasConstraintName("FK_Usuario_Cliente");
+
+                    b.Navigation("IdClienteNavigation");
+                });
+
             modelBuilder.Entity("Boteco32.Models.Cliente", b =>
                 {
                     b.Navigation("Pedidos");
+
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("Boteco32.Models.Pedido", b =>

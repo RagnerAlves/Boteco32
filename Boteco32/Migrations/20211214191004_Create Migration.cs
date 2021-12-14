@@ -4,7 +4,7 @@
 
 namespace Boteco32.Migrations
 {
-    public partial class MigrationInitial : Migration
+    public partial class CreateMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -61,6 +61,27 @@ namespace Boteco32.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuario",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nomeUsuario = table.Column<string>(type: "nchar(80)", fixedLength: true, maxLength: 80, nullable: false),
+                    email = table.Column<string>(type: "nchar(80)", fixedLength: true, maxLength: 80, nullable: false),
+                    senha = table.Column<string>(type: "nchar(80)", fixedLength: true, maxLength: 80, nullable: false),
+                    idCliente = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuario", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Usuario_Cliente",
+                        column: x => x.idCliente,
+                        principalTable: "Cliente",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ItemPedido",
                 columns: table => new
                 {
@@ -100,12 +121,20 @@ namespace Boteco32.Migrations
                 name: "IX_Pedido_idCliente",
                 table: "Pedido",
                 column: "idCliente");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuario_idCliente",
+                table: "Usuario",
+                column: "idCliente");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ItemPedido");
+
+            migrationBuilder.DropTable(
+                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Pedido");
