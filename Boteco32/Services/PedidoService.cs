@@ -28,7 +28,7 @@ namespace Boteco32.Services
             _clienteService = clienteService;
         }
 
-        public async Task<Pedido> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
+        public async Task<RetornoViewModel<Pedido>> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
         {
 
             var cliente = await _clienteService.BuscarPorId(idCliente);
@@ -41,7 +41,8 @@ namespace Boteco32.Services
 
                 if (produto == null)
                 {
-                    throw new Exception("Produto invalido");
+                    //throw new Exception("Produto invalido");
+                    return new RetornoViewModel<Pedido>($"Produto não encontrado a partir do{item.IdProduto}");
                 }
                 else
                 {
@@ -52,7 +53,9 @@ namespace Boteco32.Services
                     }
                     else
                     {
-                        throw new Exception($"Saldo insuficiente - {produto.SaldoEstoque}");
+                        //throw new Exception($"Saldo insuficiente - {produto.SaldoEstoque}");
+                        return new RetornoViewModel<Pedido>($"Estoque insuficiente{produto.SaldoEstoque}");
+
                     }
 
                 }
@@ -63,7 +66,8 @@ namespace Boteco32.Services
             novoPedido.Numero = _pedidoRepository.GerarNumeroPedido() + 1;
             novoPedido.IdCliente = idCliente;
 
-            return await _pedidoRepository.Adicionar(novoPedido);
+            var retorno = await _pedidoRepository.Adicionar(novoPedido);
+            return new RetornoViewModel<Pedido>(retorno);
 
         }
 

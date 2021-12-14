@@ -66,10 +66,9 @@ namespace Boteco32.Controllers
             }
             try
             {
+                var retornoViewModel = await _pedidoService.Adicionar(idCliente, pedidoViewModel);
 
-                var pedido = await _pedidoService.Adicionar(idCliente, pedidoViewModel);
-
-                return Created($"/{pedido.Id}", new RetornoViewModel<Pedido>(pedido));
+                return Created($"/{retornoViewModel.Data.Id}", retornoViewModel);
             }
             catch (DbUpdateException)
             {
