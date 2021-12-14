@@ -68,10 +68,10 @@ namespace Boteco32.Controllers
             try
             {
                 Cliente cliente = new Cliente()
-                {      
+                {
                     Nome = clienteViewModel.Nome,
                     Endereco = clienteViewModel.Endereco,
-                    Telefone = clienteViewModel.Telefone        
+                    Telefone = clienteViewModel.Telefone
                 };
 
                 await _clienteService.Adicionar(cliente);

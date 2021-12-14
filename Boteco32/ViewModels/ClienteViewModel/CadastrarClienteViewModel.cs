@@ -3,8 +3,8 @@
 namespace Boteco32.ViewModels.ClienteViewModel
 {
     public class CadastrarClienteViewModel
-    { 
-      
+    {
+
         public string Nome { get; set; }
         [Required(ErrorMessage = "O endereço do produto é obrigatório")]
         public string Endereco { get; set; }
