@@ -33,9 +33,8 @@ namespace Boteco32.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nchar(100)")
-                        .HasColumnName("email")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("email");
 
                     b.Property<string>("Endereco")
                         .IsRequired()
@@ -52,9 +51,8 @@ namespace Boteco32.Migrations
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
-                        .HasColumnName("senha")
-                        .IsFixedLength();
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("senha");
 
                     b.Property<string>("Telefone")
                         .IsRequired()

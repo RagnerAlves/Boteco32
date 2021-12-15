@@ -17,8 +17,8 @@ namespace Boteco32.Migrations
                     nome = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     endereco = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     telefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    email = table.Column<string>(type: "nchar(100)", fixedLength: true, maxLength: 100, nullable: false),
-                    senha = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
+                    email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    senha = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {

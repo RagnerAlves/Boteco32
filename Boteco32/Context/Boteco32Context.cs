@@ -41,8 +41,7 @@ namespace Boteco32.Models
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(100)
-                    .HasColumnName("email")
-                    .IsFixedLength();
+                    .HasColumnName("email");
 
                 entity.Property(e => e.Endereco)
                     .IsRequired()
@@ -57,8 +56,7 @@ namespace Boteco32.Models
                 entity.Property(e => e.Senha)
                     .IsRequired()
                     .HasMaxLength(50)
-                    .HasColumnName("senha")
-                    .IsFixedLength();
+                    .HasColumnName("senha");
 
                 entity.Property(e => e.Telefone)
                     .IsRequired()

@@ -60,8 +60,7 @@ namespace Boteco32.Controllers
 
             return cliente;
         }
-        //POST: api/Clientes
-        [Authorize]
+        //POST: api/Clientes    
         [HttpPost]      
         public async Task<ActionResult<Cliente>> PostCliente(
                             [FromBody] CadastrarClienteViewModel clienteViewModel)
