@@ -20,7 +20,6 @@ namespace Boteco32.Models
         public virtual DbSet<ItemPedido> ItemPedidos { get; set; }
         public virtual DbSet<Pedido> Pedidos { get; set; }
         public virtual DbSet<Produto> Produtos { get; set; }
-        public virtual DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,6 +38,12 @@ namespace Boteco32.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(100)
+                    .HasColumnName("email")
+                    .IsFixedLength();
+
                 entity.Property(e => e.Endereco)
                     .IsRequired()
                     .HasMaxLength(120)
@@ -48,6 +53,12 @@ namespace Boteco32.Models
                     .IsRequired()
                     .HasMaxLength(80)
                     .HasColumnName("nome");
+
+                entity.Property(e => e.Senha)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .HasColumnName("senha")
+                    .IsFixedLength();
 
                 entity.Property(e => e.Telefone)
                     .IsRequired()
@@ -134,39 +145,6 @@ namespace Boteco32.Models
                     .HasColumnName("preco");
 
                 entity.Property(e => e.SaldoEstoque).HasColumnName("saldoEstoque");
-            });
-
-            modelBuilder.Entity<Usuario>(entity =>
-            {
-                entity.ToTable("Usuario");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(80)
-                    .HasColumnName("email")
-                    .IsFixedLength();
-
-                entity.Property(e => e.IdCliente).HasColumnName("idCliente");
-
-                entity.Property(e => e.NomeUsuario)
-                    .IsRequired()
-                    .HasMaxLength(80)
-                    .HasColumnName("nomeUsuario")
-                    .IsFixedLength();
-
-                entity.Property(e => e.Senha)
-                    .IsRequired()
-                    .HasMaxLength(80)
-                    .HasColumnName("senha")
-                    .IsFixedLength();
-
-                entity.HasOne(d => d.IdClienteNavigation)
-                    .WithMany(p => p.Usuarios)
-                    .HasForeignKey(d => d.IdCliente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Usuario_Cliente");
             });
 
             OnModelCreatingPartial(modelBuilder);

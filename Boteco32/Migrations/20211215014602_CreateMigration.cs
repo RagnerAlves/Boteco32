@@ -16,7 +16,9 @@ namespace Boteco32.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     nome = table.Column<string>(type: "nvarchar(80)", maxLength: 80, nullable: false),
                     endereco = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    telefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    telefone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    email = table.Column<string>(type: "nchar(100)", fixedLength: true, maxLength: 100, nullable: false),
+                    senha = table.Column<string>(type: "nchar(50)", fixedLength: true, maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,27 +57,6 @@ namespace Boteco32.Migrations
                     table.PrimaryKey("PK_Pedido", x => x.id);
                     table.ForeignKey(
                         name: "FK_Pedido_Cliente",
-                        column: x => x.idCliente,
-                        principalTable: "Cliente",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuario",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nomeUsuario = table.Column<string>(type: "nchar(80)", fixedLength: true, maxLength: 80, nullable: false),
-                    email = table.Column<string>(type: "nchar(80)", fixedLength: true, maxLength: 80, nullable: false),
-                    senha = table.Column<string>(type: "nchar(80)", fixedLength: true, maxLength: 80, nullable: false),
-                    idCliente = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuario", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_Usuario_Cliente",
                         column: x => x.idCliente,
                         principalTable: "Cliente",
                         principalColumn: "id");
@@ -121,20 +102,12 @@ namespace Boteco32.Migrations
                 name: "IX_Pedido_idCliente",
                 table: "Pedido",
                 column: "idCliente");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Usuario_idCliente",
-                table: "Usuario",
-                column: "idCliente");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "ItemPedido");
-
-            migrationBuilder.DropTable(
-                name: "Usuario");
 
             migrationBuilder.DropTable(
                 name: "Pedido");

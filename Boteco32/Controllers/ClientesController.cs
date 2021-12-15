@@ -11,6 +11,7 @@ using Boteco32.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq.Expressions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Boteco32.Controllers
 {
@@ -26,6 +27,8 @@ namespace Boteco32.Controllers
         }
 
         // GET: api/Clientes
+        [Authorize]
+        [Produces("application/json")]
         [HttpGet]
         public async Task<IActionResult> GetClientes()
         {
@@ -58,7 +61,8 @@ namespace Boteco32.Controllers
             return cliente;
         }
         //POST: api/Clientes
-        [HttpPost]
+        [Authorize]
+        [HttpPost]      
         public async Task<ActionResult<Cliente>> PostCliente(
                             [FromBody] CadastrarClienteViewModel clienteViewModel)
         {
@@ -69,15 +73,14 @@ namespace Boteco32.Controllers
             try
             {
                 Cliente cliente = new Cliente()
-                {                     
+                {    
+                    Nome = clienteViewModel.Nome,
                     Email = clienteViewModel.Email,
                     Senha = clienteViewModel.Senha,
                     Endereco = clienteViewModel.Endereco,
                     Telefone = clienteViewModel.Telefone        
                 };
-
                 await _clienteService.Adicionar(cliente);
-
 
                 return Created($"/{cliente.Id}", new RetornoViewModel<Cliente>(cliente));
             }

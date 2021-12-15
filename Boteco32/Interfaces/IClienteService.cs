@@ -9,7 +9,14 @@ using Boteco32.ViewModels.RetornoViewModel;
 namespace Boteco32.Services
 {
     public interface IClienteService : IGenerics<Cliente>
-    {     
-        Task<List<Cliente>>ListarTodos(Expression<Func<Cliente, bool>> expression);      
+    {
+
+        Task<bool> AdicionaUsuario(string email, string senha, int idade, string celular);
+
+        Task<bool> ExisteUsuario(string email, string senha);
+
+        Task<int> RetornaIdUsuario(string email);
+
+        Task<List<Cliente>> ListarTodos(Expression<Func<Cliente, bool>> expression);
     }
 }

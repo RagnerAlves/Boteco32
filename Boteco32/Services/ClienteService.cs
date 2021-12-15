@@ -41,5 +41,20 @@ namespace Boteco32.Services
         {
             return await _clienteRepository.BuscarTodos();
         }
+
+        public Task<bool> AdicionaUsuario(string email, string senha, int idade, string celular)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ExisteUsuario(string email, string senha)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> RetornaIdUsuario(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

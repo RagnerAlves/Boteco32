@@ -30,7 +30,50 @@ namespace Boteco32.Repository
             throw new NotImplementedException();
         }
 
-      
+        public Task<bool> AdicionaUsuario(string email, string senha, int idade, string celular)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> ExisteUsuario(string email, string senha)
+        {
+            try
+            {
+                using (var data = new Boteco32Context(_context))
+                {
+                    return await data.Clientes.
+                          Where(u => u.Email.Equals(email) && u.Senha.Equals(senha))
+                          .AsNoTracking()
+                          .AnyAsync();
+
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<int> RetornaIdUsuario(string email)
+        {
+            try
+            {
+                using (var data = new Boteco32Context(_context))
+                {
+                    var usuario = await data.Clientes.
+                          Where(u => u.Email.Equals(email))
+                          .AsNoTracking()
+                          .FirstOrDefaultAsync();
+
+                    return usuario.Id;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
     }
 
 
