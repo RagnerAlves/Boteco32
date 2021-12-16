@@ -1,0 +1,13 @@
+        [TestMethod]
+        public void PostarNovoCliente()
+        {
+            Cliente c = new Cliente();
+            c.Nome= "Ricardo";
+            c.Email = "ricardo@ig.com.br";
+            c.Senha = "567";
+            c.Endereco = "Rua Sampaio Corrêa, 322";
+            c.Telefone = "(11) 2239-4059";
+
+            var cl = _clientesController.PostNovoCliente(c);
+            Assert.AreNotEqual(null, cl);
+        }
