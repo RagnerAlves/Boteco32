@@ -64,9 +64,9 @@ namespace Boteco32.Services
             throw new NotImplementedException();
         }
 
-        Task<Cliente> IGenerics<Cliente>.BuscarPorId(int id)
+        public async Task<Cliente>BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            return await _clienteRepository.BuscarPorId(id);
         }
     }
 }

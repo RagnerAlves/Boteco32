@@ -109,14 +109,14 @@ namespace Boteco32.Controllers
                         [FromBody] CadastrarClienteViewModel value)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new RetornoViewModel<Produto>(ModelState.RecuperarErros()));
+                return BadRequest(new RetornoViewModel<Cliente>(ModelState.RecuperarErros()));
 
             try
             {
                 var cliente = await _clienteService.BuscarPorId(id);
 
                 if (cliente == null)
-                    return NotFound(new RetornoViewModel<Produto>("Cliente não encontrado."));
+                    return NotFound(new RetornoViewModel<Cliente>("Cliente não encontrado."));
 
                 cliente.Nome = value.Nome;
                 cliente.Endereco = value.Endereco;
