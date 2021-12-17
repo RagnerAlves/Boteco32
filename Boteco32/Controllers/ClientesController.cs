@@ -26,11 +26,6 @@ namespace Boteco32.Controllers
         {
             _clienteService = clienteService;
         }
-
-        public ClientesController()
-        {
-        }
-
         // GET: api/Clientes
         [Authorize]
         [Produces("application/json")]

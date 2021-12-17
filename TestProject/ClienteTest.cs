@@ -11,9 +11,7 @@ namespace TestProject
     [TestClass]
     public class ClienteTest
     {
-
-        ClientesController _clientesController = new();
-
+   
         [TestMethod]
         public void BuscaTodosClientes()
         {
