@@ -50,5 +50,23 @@ namespace Boteco32.Repository
               return quant;
             }                   
         }
+
+        public async Task Delete(Pedido pedido)
+        {
+            foreach(var item in pedido.ItemPedidos)
+            {
+                using (var data = new Boteco32Context(_context))
+                {
+                    data.Set<ItemPedido>().Remove(item);
+                    await data.SaveChangesAsync();
+                }
+            }
+            using (var data = new Boteco32Context(_context))
+            {
+                data.Set<Pedido>().Remove(pedido);
+                await data.SaveChangesAsync();
+            }
+
+        }
     }
 }
