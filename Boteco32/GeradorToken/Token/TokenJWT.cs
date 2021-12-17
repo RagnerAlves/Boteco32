@@ -15,7 +15,7 @@ namespace WebAPI.Token
             this.token = token;
         }
 
-        public DateTime ValidTo => token.ValidTo;
+        public DateTime TempoValido => token.ValidTo;
 
         public string value => new JwtSecurityTokenHandler().WriteToken(this.token);
     }

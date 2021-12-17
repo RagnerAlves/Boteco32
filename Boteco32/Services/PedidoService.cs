@@ -63,14 +63,6 @@ namespace Boteco32.Services
             Pedido resultado = await _pedidoRepository.AdicionarPedido(novoPedido);
             return new RetornoViewModel<Pedido>(resultado);
         }
-
-        
-
-        public Task<Pedido> Atualizar(Pedido pedido)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<Pedido> BuscarPedidoPorId(int id)
         {
             return await _pedidoRepository.BuscarPorId(id);
@@ -79,11 +71,19 @@ namespace Boteco32.Services
         {
             return await _pedidoRepository.BuscarPedidos();
         }
-
         public async Task Delete(Pedido pedido)
         {
             await _pedidoRepository.Delete(pedido);
         }
+        public Task<Pedido> Atualizar(Pedido pedido)
+        {
+            throw new System.NotImplementedException();
+        }
+
+     
+    
+
+
 
     }
 }
