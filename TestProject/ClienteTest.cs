@@ -11,11 +11,12 @@ namespace TestProject
     [TestClass]
     public class ClienteTest
     {
-        ClientesController _clientesController = new ClientesController();
 
         [TestMethod]
         public void BuscaTodosClientes()
         {
+            Moq.Mock<IClienteService> iClienteService = new Moq.Mock<IClienteService>();
+            ClientesController _clientesController = new ClientesController(iClienteService.Object);
             var cli = _clientesController.GetClientes();
             Assert.AreNotEqual(null, cli);
         }
@@ -23,6 +24,8 @@ namespace TestProject
         [TestMethod]
         public void BuscaClientePorId()
         {
+            Moq.Mock<IClienteService> iClienteService = new Moq.Mock<IClienteService>();
+            ClientesController _clientesController = new ClientesController(iClienteService.Object);
             var cli = _clientesController.GetCliente(1);
             Assert.AreNotEqual(null, cli.Id);
         }
@@ -30,14 +33,16 @@ namespace TestProject
         [TestMethod]
         public void PostarNovoCliente()
         {
-            Cliente c = new Cliente();
+            Moq.Mock<IClienteService> iClienteService = new Moq.Mock<IClienteService>();
+            ClientesController _clientesController = new ClientesController(iClienteService.Object);
+            CadastrarClienteViewModel c = new CadastrarClienteViewModel();
             c.Nome= "Ricardo";
             c.Email = "ricardo@ig.com.br";
             c.Senha = "567";
             c.Endereco = "Rua Sampaio Corrêa, 322";
             c.Telefone = "(11) 2239-4059";
 
-            var cl = _clientesController.PostNovoCliente(c);
+            var cl = _clientesController.PostCliente(c);
             Assert.AreNotEqual(null, cl);
         }
     }
