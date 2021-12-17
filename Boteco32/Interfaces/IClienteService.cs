@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Boteco32.Interfaces;
 using Boteco32.Models;
+using Boteco32.ViewModels.ClienteViewModel;
 using Boteco32.ViewModels.RetornoViewModel;
 
 namespace Boteco32.Services
@@ -16,7 +17,7 @@ namespace Boteco32.Services
         Task<bool> ExisteUsuario(string email, string senha);
 
         Task<int> RetornaIdUsuario(string email);
-
-        Task<List<Cliente>> ListarTodos(Expression<Func<Cliente, bool>> expression);
+        Task<ListaClienteViewModel> BuscaClientePorId(int id);
+        Task<List<ListaClienteViewModel>> ListarTodos();
     }
 }

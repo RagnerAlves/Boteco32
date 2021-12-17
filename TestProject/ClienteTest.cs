@@ -11,7 +11,7 @@ namespace TestProject
     [TestClass]
     public class ClienteTest
     {
-        ClientesController _clientesController = new ClientesController();
+        ClientesController _clientesController = new();
 
         [TestMethod]
         public void BuscaTodosClientes()
@@ -21,24 +21,24 @@ namespace TestProject
         }
 
         [TestMethod]
-        public void BuscaClientePorId()
+        public void BuscarClientePorId()
         {
             var cli = _clientesController.GetCliente(1);
             Assert.AreNotEqual(null, cli.Id);
         }
 
-        [TestMethod]
-        public void PostarNovoCliente()
-        {
-            Cliente c = new Cliente();
-            c.Nome= "Ricardo";
-            c.Email = "ricardo@ig.com.br";
-            c.Senha = "567";
-            c.Endereco = "Rua Sampaio Corrêa, 322";
-            c.Telefone = "(11) 2239-4059";
+        //[TestMethod]
+        //public void PostarNovoCliente()
+        //{
+        //    Cliente c = new Cliente();
+        //    c.Nome = "Ricardo";
+        //    c.Email = "ricardo@ig.com.br";
+        //    c.Senha = "567";
+        //    c.Endereco = "Rua Sampaio Corrêa, 322";
+        //    c.Telefone = "(11) 2239-4059";
 
-            var cl = _clientesController.PostNovoCliente(c);
-            Assert.AreNotEqual(null, cl);
-        }
+        //    var cl = _clientesController.PostNovoCliente(c);
+        //    Assert.AreNotEqual(null, cl);
+        //}
     }
 }

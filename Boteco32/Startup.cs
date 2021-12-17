@@ -84,7 +84,7 @@ namespace Boteco32
            services.AddSwaggerGen(c =>
            {
                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Boteco32", Version = "v1",              
-                   Description = "An ASP.NET Core Web API for managing ToDo items",
+                   Description = " ASP.NET Core Web API for Boteco32",
                    TermsOfService = new Uri("https://example.com/terms"),
                    Contact = new OpenApiContact
                    {
