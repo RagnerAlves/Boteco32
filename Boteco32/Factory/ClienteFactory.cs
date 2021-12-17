@@ -20,7 +20,7 @@ namespace Boteco32.Factory
         }
         public static ListaClienteViewModel ConverterClienteEmListaViewModelCliente(Cliente cliente)
         {
-            var listaClienteViewModel = new ListaClienteViewModel(cliente.Nome, cliente.Email, cliente.Endereco, cliente.Telefone);   
+            var listaClienteViewModel = new ListaClienteViewModel(cliente.Id,cliente.Nome, cliente.Email, cliente.Endereco, cliente.Telefone);   
             return listaClienteViewModel;   
         }
         public static List<ListaClienteViewModel> ConverterClientesEmListViewModelClientes(List<Cliente> clientes)
