@@ -53,14 +53,14 @@ namespace Boteco32.Repository
 
         public async Task Delete(Pedido pedido)
         {
-            foreach(var item in pedido.ItemPedidos)
+            for (int i = 0; i < pedido.ItemPedidos.Count; i++)
             {
                 using (var data = new Boteco32Context(_context))
                 {
-                    data.Set<ItemPedido>().Remove(item);
+                    data.Set<ItemPedido>().Remove(pedido.ItemPedidos.FirstOrDefault( p => p.Id == pedido.Id));
                     await data.SaveChangesAsync();
                 }
-            }
+            } 
             using (var data = new Boteco32Context(_context))
             {
                 data.Set<Pedido>().Remove(pedido);

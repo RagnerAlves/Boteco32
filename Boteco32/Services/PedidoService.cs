@@ -28,10 +28,7 @@ namespace Boteco32.Services
         public async Task<RetornoViewModel<Pedido>> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
         {
             decimal total = 0;
-           
-            Cliente cliente = await _clienteService.BuscarPorId(idCliente);
-     
-
+             
             Pedido novoPedido = new Pedido();
             foreach (var item in pedido.ItensPedidos)
             {
