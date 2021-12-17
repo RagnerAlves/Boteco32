@@ -81,5 +81,31 @@ namespace Boteco32.Controllers
 
         }
 
+
+        //// DELETE: api/Pedido/{id}
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeletePedido([FromRoute] int id)
+        //{
+        //    try
+        //    {
+        //        var pedido = await _pedidoService.BuscarPedidoPorId(id);
+
+        //        if (pedido == null)
+        //            return NotFound(new RetornoViewModel<Pedido>("Pedido não encontrado."));
+
+        //        await _pedidoService.Delete(pedido);
+
+        //        return Ok(new RetornoViewModel<Pedido>(pedido));
+        //    }
+        //    catch (DbUpdateException ex)
+        //    {
+        //        return StatusCode(500, new RetornoViewModel<Pedido>("Falha ao remover o pedido."));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, new RetornoViewModel<Pedido>("Erro interno."));
+        //    }
+        //}
+
     }
 }
