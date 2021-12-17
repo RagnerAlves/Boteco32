@@ -67,7 +67,7 @@ namespace Boteco32.Controllers
             }
             try
             {
-                var retornoViewModel = await _pedidoService.Adicionar(idCliente, pedidoViewModel);            
+                var retornoViewModel = await _pedidoService.Adicionar(idCliente, pedidoViewModel);
                 return Created($"/{retornoViewModel.Erros}", retornoViewModel);
             }
             catch (DbUpdateException)
@@ -80,66 +80,32 @@ namespace Boteco32.Controllers
             }
 
         }
-        /*
-                // PUT: api/Pedido
-                [HttpPut("{id}")]
-                public async Task<IActionResult> Put([FromRoute] int id,
-                                [FromBody] CadastrarPedidoViewModel value)
-                {
-                    if (!ModelState.IsValid)
-                        return BadRequest(new RetornoViewModel<Pedido>(ModelState.RecuperarErros()));
 
-                    try
-                    {
-                        var pedido = await _pedidoService.BuscarPedidoPorId(id);
 
-                        if (pedido == null)
-                            return NotFound(new RetornoViewModel<Pedido>("Pedido não encontrado."));
+        // DELETE: api/Pedido/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePedido([FromRoute] int id)
+        {
+            try
+            {
+                var pedido = await _pedidoService.BuscarPedidoPorId(id);
 
-                        pedido.Numero = value.Numero;
-                        pedido.Data = value.Data;
-                        pedido.ValorTotal = value.ValorTotal;
-                        pedido.IdCliente = value.IdCliente;
+                if (pedido == null)
+                    return NotFound(new RetornoViewModel<Pedido>("Pedido não encontrado."));
 
-                        await _pedidoService.Atualizar(pedido);
+                await _pedidoService.Delete(pedido);
 
-                        return Ok(new RetornoViewModel<Pedido>(pedido));
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        return StatusCode(500, new RetornoViewModel<Pedido>("Falha ao atualizar o pedido."));
-                    }
-                    catch (Exception ex)
-                    {
-                        return StatusCode(500, new RetornoViewModel<Pedido>("Erro interno."));
-                    }
+                return Ok(new RetornoViewModel<Pedido>(pedido));
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Pedido>("Falha ao remover o pedido."));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new RetornoViewModel<Pedido>("Erro interno."));
+            }
+        }
 
-                }
-
-                // DELETE: api/Pedido/{id}
-                [HttpDelete("{id}")]
-                public async Task<IActionResult> DeletePedido([FromRoute] int id)
-                {
-                    try
-                    {
-                        var pedido = await _pedidoService.BuscarPedidoPorId(id);
-
-                        if (pedido == null)
-                            return NotFound(new RetornoViewModel<Pedido>("Pedido não encontrado."));
-
-                        _pedidoService.Delete(pedido);
-
-                        return Ok(new RetornoViewModel<Pedido>(pedido));
-                    }
-                    catch (DbUpdateException ex)
-                    {
-                        return StatusCode(500, new RetornoViewModel<Pedido>("Falha ao remover o pedido."));
-                    }
-                    catch (Exception ex)
-                    {
-                        return StatusCode(500, new RetornoViewModel<Pedido>("Erro interno."));
-                    }
-                }
-        */
     }
 }

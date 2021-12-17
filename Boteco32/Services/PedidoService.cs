@@ -28,7 +28,7 @@ namespace Boteco32.Services
         public async Task<RetornoViewModel<Pedido>> Adicionar(int idCliente, CadastrarPedidoViewModel pedido)
         {
             decimal total = 0;
-
+           
             Cliente cliente = await _clienteService.BuscarPorId(idCliente);
      
 
@@ -64,10 +64,7 @@ namespace Boteco32.Services
             return new RetornoViewModel<Pedido>(resultado);
         }
 
-        public Task Adicionar(Pedido obj)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public Task<Pedido> Atualizar(Pedido pedido)
         {
@@ -83,29 +80,10 @@ namespace Boteco32.Services
             return await _pedidoRepository.BuscarPedidos();
         }
 
-        public Task<Pedido> BuscarPorId(int id)
+        public async Task Delete(Pedido pedido)
         {
-            throw new NotImplementedException();
+            await _pedidoRepository.Delete(pedido);
         }
 
-        public Task<List<Pedido>> BuscarTodos()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Pedido pedido)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task Excluir(Pedido obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IGenerics<Pedido>.Atualizar(Pedido obj)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
