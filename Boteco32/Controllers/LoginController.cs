@@ -39,7 +39,7 @@ namespace Boteco32.Controllers
                  .AddExpiry(5)
                  .Builder();
 
-                return Ok(token.value);
+                return Ok(token);
             }
             else
             {

@@ -51,20 +51,13 @@ namespace Boteco32.Repository
             }                   
         }
 
-        public async Task Delete(Pedido pedido)
+        public async Task DeletePedido(Pedido pedido)
         {
-            for (int i = 0; i < pedido.ItemPedidos.Count; i++)
-            {
-                using (var data = new Boteco32Context(_context))
-                {
-                    data.Set<ItemPedido>().Remove(pedido.ItemPedidos.FirstOrDefault( p => p.Id == pedido.Id));
-                    await data.SaveChangesAsync();
-                }
-            } 
             using (var data = new Boteco32Context(_context))
             {
-                data.Set<Pedido>().Remove(pedido);
-                await data.SaveChangesAsync();
+               data.Set<ItemPedido>().Remove(pedido.ItemPedidos.FirstOrDefault( p => p != null));
+               await data.SaveChangesAsync();
+               await data.SaveChangesAsync();
             }
 
         }
