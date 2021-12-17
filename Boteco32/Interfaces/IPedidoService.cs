@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Boteco32.Interfaces
 {
-    public interface IPedidoService : IGenerics<Pedido>
+    public interface IPedidoService 
     {
         Task <RetornoViewModel<Pedido>> Adicionar(int idCliente, CadastrarPedidoViewModel pedido);
         Task<List<Pedido>> BuscarPedidos();
         Task<Pedido> BuscarPedidoPorId(int id);
+        Task Delete(Pedido pedido);
     }
 }

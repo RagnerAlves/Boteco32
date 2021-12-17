@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Authorization;
+using Boteco32.Util;
 
 namespace Boteco32.Controllers
 {
@@ -75,17 +76,26 @@ namespace Boteco32.Controllers
             }
             try
             {
-                Cliente cliente = new Cliente()
-                {    
-                    Nome = clienteViewModel.Nome,
-                    Email = clienteViewModel.Email,
-                    Senha = clienteViewModel.Senha,
-                    Endereco = clienteViewModel.Endereco,
-                    Telefone = clienteViewModel.Telefone        
-                };
-                await _clienteService.Adicionar(cliente);
+              
+                    if (Valida.ValidaEmail(clienteViewModel.Email))
+                    {
+                        Cliente cliente = new Cliente()
+                        {
+                            Nome = clienteViewModel.Nome,
+                            Email = clienteViewModel.Email,
+                            Senha = clienteViewModel.Senha,
+                            Endereco = clienteViewModel.Endereco,
+                            Telefone = clienteViewModel.Telefone
+                        };
+                        await _clienteService.Adicionar(cliente);
 
-                return Created($"/{cliente.Id}", new RetornoViewModel<Cliente>(cliente));
+                        return Created($"/{cliente.Id}", new RetornoViewModel<Cliente>(cliente));
+                    }
+                    else
+                    {
+                        return StatusCode(500, new RetornoViewModel<List<Cliente>>("Email invalido"));
+                    }
+                
             }
             catch (DbUpdateException)
             {

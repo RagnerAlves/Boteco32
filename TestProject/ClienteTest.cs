@@ -11,11 +11,14 @@ namespace TestProject
     [TestClass]
     public class ClienteTest
     {
+
         ClientesController _clientesController = new();
 
         [TestMethod]
         public void BuscaTodosClientes()
         {
+            Moq.Mock<IClienteService> iClienteService = new Moq.Mock<IClienteService>();
+            ClientesController _clientesController = new ClientesController(iClienteService.Object);
             var cli = _clientesController.GetClientes();
             Assert.AreNotEqual(null, cli);
         }
@@ -23,22 +26,26 @@ namespace TestProject
         [TestMethod]
         public void BuscarClientePorId()
         {
+            Moq.Mock<IClienteService> iClienteService = new Moq.Mock<IClienteService>();
+            ClientesController _clientesController = new ClientesController(iClienteService.Object);
             var cli = _clientesController.GetCliente(1);
             Assert.AreNotEqual(null, cli.Id);
         }
 
-        //[TestMethod]
-        //public void PostarNovoCliente()
-        //{
-        //    Cliente c = new Cliente();
-        //    c.Nome = "Ricardo";
-        //    c.Email = "ricardo@ig.com.br";
-        //    c.Senha = "567";
-        //    c.Endereco = "Rua Sampaio Corrêa, 322";
-        //    c.Telefone = "(11) 2239-4059";
+        [TestMethod]
+        public void PostarNovoCliente()
+        {
+            Moq.Mock<IClienteService> iClienteService = new Moq.Mock<IClienteService>();
+            ClientesController _clientesController = new ClientesController(iClienteService.Object);
+            CadastrarClienteViewModel c = new CadastrarClienteViewModel();
+            c.Nome= "Ricardo";
+            c.Email = "ricardo@ig.com.br";
+            c.Senha = "567";
+            c.Endereco = "Rua Sampaio CorrÃªa, 322";
+            c.Telefone = "(11) 2239-4059";
 
-        //    var cl = _clientesController.PostNovoCliente(c);
-        //    Assert.AreNotEqual(null, cl);
-        //}
+            var cl = _clientesController.PostCliente(c);
+            Assert.AreNotEqual(null, cl);
+        }
     }
 }
