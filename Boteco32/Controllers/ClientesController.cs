@@ -27,6 +27,10 @@ namespace Boteco32.Controllers
             _clienteService = clienteService;
         }
 
+        public ClientesController()
+        {
+        }
+
         // GET: api/Clientes
         [Authorize]
         [Produces("application/json")]
@@ -35,24 +39,24 @@ namespace Boteco32.Controllers
         {
             try
             {
-                var listaDeClientes = await _clienteService.BuscarTodos();
+                var listaDeClientes = await _clienteService.ListarTodos();
                 if (listaDeClientes == null)
                 {
-                    return NotFound(new RetornoViewModel<Cliente>("Nenhum cliente na base de dados"));
+                    return NotFound(new RetornoViewModel<ListaClienteViewModel>("Nenhum cliente na base de dados"));
                 }
-                return Ok(new RetornoViewModel<List<Cliente>>(listaDeClientes));
+                return Ok(new RetornoViewModel<List<ListaClienteViewModel>>(listaDeClientes));
             }
             catch (Exception e)
             {
-                return StatusCode(500, new RetornoViewModel<List<Cliente>>("Erro interno."));
+                return StatusCode(500, new RetornoViewModel<List<ListaClienteViewModel>>("Erro interno."));
             }
         }
 
         //GET: api/Clientes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cliente>> GetCliente(int id)
+        public async Task<ActionResult<ListaClienteViewModel>> GetCliente(int id)
         {
-            var cliente = await _clienteService.BuscarPorId(id);
+            var cliente = await _clienteService.BuscaClientePorId(id);
 
             if (cliente == null)
             {

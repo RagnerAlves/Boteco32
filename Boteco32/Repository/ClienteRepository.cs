@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Boteco32.Models;
 using Boteco32.Services;
+using Boteco32.ViewModels.ClienteViewModel;
 using Boteco32.ViewModels.RetornoViewModel;
 using Microsoft.EntityFrameworkCore;
 
@@ -73,6 +74,16 @@ namespace Boteco32.Repository
             {
                 return 0;
             }
+        }
+
+        public Task<List<ListaClienteViewModel>> ListarTodos()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ListaClienteViewModel> BuscaClientePorId(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -15,7 +15,6 @@ namespace Boteco32.Models
             : base(options)
         {
         }
-
         public virtual DbSet<Cliente> Clientes { get; set; }
         public virtual DbSet<ItemPedido> ItemPedidos { get; set; }
         public virtual DbSet<Pedido> Pedidos { get; set; }

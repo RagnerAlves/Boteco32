@@ -12,6 +12,8 @@ namespace TestProject
     public class ClienteTest
     {
 
+        ClientesController _clientesController = new();
+
         [TestMethod]
         public void BuscaTodosClientes()
         {
@@ -22,7 +24,7 @@ namespace TestProject
         }
 
         [TestMethod]
-        public void BuscaClientePorId()
+        public void BuscarClientePorId()
         {
             Moq.Mock<IClienteService> iClienteService = new Moq.Mock<IClienteService>();
             ClientesController _clientesController = new ClientesController(iClienteService.Object);
@@ -39,7 +41,7 @@ namespace TestProject
             c.Nome= "Ricardo";
             c.Email = "ricardo@ig.com.br";
             c.Senha = "567";
-            c.Endereco = "Rua Sampaio Corrêa, 322";
+            c.Endereco = "Rua Sampaio CorrÃªa, 322";
             c.Telefone = "(11) 2239-4059";
 
             var cl = _clientesController.PostCliente(c);

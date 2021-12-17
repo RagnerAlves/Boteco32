@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Boteco32.Factory;
 using Boteco32.Interfaces;
 using Boteco32.Models;
 using Boteco32.Repository;
+using Boteco32.ViewModels.ClienteViewModel;
+
 
 namespace Boteco32.Services
 {
@@ -29,19 +32,18 @@ namespace Boteco32.Services
         {
             await _clienteRepository.Delete(cliente);
         }
-        public Task<Cliente> BuscarPorId(int id)
+        public async Task<ListaClienteViewModel> BuscaClientePorId(int id)
         {
-            return _clienteRepository.BuscarPorId(id);
+           var resultado = await _clienteRepository.BuscarPorId(id);
+            var listaClienteViewModel = ClienteFactory.ConverterClienteEmListaViewModelCliente(resultado);
+            return listaClienteViewModel;
         }
-        public async Task<List<Cliente>> ListarTodos(Expression<Func<Cliente, bool>> expression)
+        public async Task<List<ListaClienteViewModel>> ListarTodos()
         {
-            return await _clienteRepository.BuscarTodos();
+            var resultado = await _clienteRepository.BuscarTodos();
+            var listaClienteViewModel = ClienteFactory.ConverterClientesEmListViewModelClientes(resultado);  
+            return listaClienteViewModel;
         }
-        public async Task<List<Cliente>> BuscarTodos()
-        {
-            return await _clienteRepository.BuscarTodos();
-        }
-
         public Task<bool> AdicionaUsuario(string email, string senha, int idade, string celular)
         {
             throw new NotImplementedException();
@@ -53,6 +55,16 @@ namespace Boteco32.Services
         }
 
         public Task<int> RetornaIdUsuario(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Cliente>> IGenerics<Cliente>.BuscarTodos()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<Cliente> IGenerics<Cliente>.BuscarPorId(int id)
         {
             throw new NotImplementedException();
         }
